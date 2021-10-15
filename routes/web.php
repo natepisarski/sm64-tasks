@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('')->group(function () {
+    Route::prefix('tasks')->group(function () {
+        Route::get('', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
+    });
+});
