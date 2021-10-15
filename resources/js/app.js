@@ -13,3 +13,5 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+
+console.debug('Trying to run example');

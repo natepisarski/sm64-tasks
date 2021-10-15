@@ -19,6 +19,8 @@ function Example() {
 
 export default Example;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
-}
+setTimeout( () => {
+    if (document.getElementById('react-root')) {
+        ReactDOM.render(<Example/>, document.getElementById('react-root'));
+    }
+}, 0);
