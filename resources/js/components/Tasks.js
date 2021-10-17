@@ -4,10 +4,10 @@ export const Tasks = ({}) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        fetch('/api/tasks')
+        fetch('/api/ tasks')
             .then(response => response.json())
             .then(data => setTasks(data));
-    });
+    }, []);
 
     const onTaskClick = task => () => alert(task.slug);
 
