@@ -12,9 +12,7 @@ export const Tasks = ({}) => {
     return <BrowserRouter>
         <Switch>
             <Route path={'/tasks/:taskId'} children={<TaskIndex />} />
-            <Route path={'/tasks'}>
-                <TaskIndex />
-            </Route>
+            <Route path={'/tasks'} children={<TaskIndex />} />
         </Switch>
     </BrowserRouter>
 };
