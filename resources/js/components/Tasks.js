@@ -4,7 +4,7 @@ export const Tasks = ({}) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        fetch('/tasks')
+        fetch('/api/tasks')
             .then(response => response.json())
             .then(data => setTasks(data));
     });

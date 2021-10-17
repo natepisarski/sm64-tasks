@@ -2198,7 +2198,7 @@ var Tasks = function Tasks(_ref) {
       setTasks = _useState2[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    fetch('/tasks').then(function (response) {
+    fetch('/api/tasks').then(function (response) {
       return response.json();
     }).then(function (data) {
       return setTasks(data);
