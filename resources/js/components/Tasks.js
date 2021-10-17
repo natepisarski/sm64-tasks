@@ -13,7 +13,7 @@ import {SiteHeader} from "./SiteHeader";
 export const Tasks = ({}) => {
     return <BrowserRouter>
         <SiteHeader />
-        <div className={'grid grid-cols-12 w-full'}>
+        <div className={'grid grid-cols-12 w-full md:gap-x-4'}>
             <div className={'grid col-span-12 md:col-span-2'}>
                 <SiteNavigation/>
             </div>
