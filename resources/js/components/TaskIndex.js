@@ -7,7 +7,7 @@ export const TaskIndex = ({}) => {
     console.debug('This is the task ID: ', taskId, currentTaskId);
 
     return <div>
-        Task Index
+        <div className={"bg-blue-500"}>Task Index</div>
         { currentTaskId == 1 ? 'Viewing Task 1' : 'Viewing no task'}
     </div>
 }
