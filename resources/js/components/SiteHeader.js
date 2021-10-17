@@ -1,5 +1,5 @@
 export const SiteHeader = ({}) => {
-    return <div className="relative bg-indigo-800">
+    return <div className="relative bg-indigo-800 mb-6">
         <div className="absolute inset-0">
             <img className="w-full h-full object-cover"
                  src="https://myemulator.online/wp-content/uploads/2017/11/super-mario-64.jpg"
