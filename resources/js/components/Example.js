@@ -5,7 +5,6 @@ import {Tasks} from "./Tasks";
 function Example() {
     return (
         <div className="container">
-           The tasks should appear below
             <Tasks />
         </div>
     );

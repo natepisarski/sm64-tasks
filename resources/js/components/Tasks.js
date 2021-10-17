@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {TaskIndex} from "./TaskIndex";
 
+/**
+ * This is the EntryPoint for the React app. From here we just set up the router. The individual pages each control
+ * their API calls, state, functionality, etc.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const Tasks = ({}) => {
-    const [tasks, setTasks] = useState([]);
-
-    useEffect(() => {
-        fetch('/api/ tasks')
-            .then(response => response.json())
-            .then(data => setTasks(data));
-    }, []);
-
-    const onTaskClick = task => () => alert(task.slug);
-
-    const renderedTasks = tasks.map(task => {
-        return <li key={task.slug} className={'text-lg'} onClick={onTaskClick(task)}>{ task.name }</li>
-    });
-
-    return <ul>
-        { renderedTasks }
-    </ul>
+    return <BrowserRouter>
+        <Switch>
+            <Route path={'/tasks/:taskId'} children={<TaskIndex />} />
+            <Route path={'/tasks'}>
+                <TaskIndex />
+            </Route>
+        </Switch>
+    </BrowserRouter>
 };
