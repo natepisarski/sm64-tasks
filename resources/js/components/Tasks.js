@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {TaskIndex} from "./TaskIndex";
+import {SiteNavigation} from "./SiteNavigation";
+import {SiteHeader} from "./SiteHeader";
 
 /**
  * This is the EntryPoint for the React app. From here we just set up the router. The individual pages each control
@@ -10,9 +12,17 @@ import {TaskIndex} from "./TaskIndex";
  */
 export const Tasks = ({}) => {
     return <BrowserRouter>
-        <Switch>
-            <Route path={'/tasks/:taskId'} children={<TaskIndex />} />
-            <Route path={'/tasks'} children={<TaskIndex />} />
-        </Switch>
+        <SiteHeader />
+        <div className={'grid grid-cols-12 w-full'}>
+            <div className={'grid col-span-1'}>
+                <SiteNavigation/>
+            </div>
+            <div className={'grid col-span-11'}>
+                <Switch>
+                    <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
+                    <Route path={'/tasks'} children={<TaskIndex/>}/>
+                </Switch>
+            </div>
+        </div>
     </BrowserRouter>
 };

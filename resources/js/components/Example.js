@@ -4,7 +4,7 @@ import {Tasks} from "./Tasks";
 
 function Example() {
     return (
-        <div className="container">
+        <div className="w-full">
             <Tasks />
         </div>
     );
