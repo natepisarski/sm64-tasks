@@ -12,14 +12,15 @@ export const TaskIndex = ({}) => {
     let [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        fetch('api/tasks')
+        fetch('/api/tasks')
             .then(response => response.json())
             .then(data => setTasks(data));
     }, []);
 
     let {taskId} = useParams();
+    console.debug('Got Param: ', taskId);
     const [currentTaskId, setTaskId] = useState(taskId);
-    const currentTask = tasks.find(task => task.id === currentTaskId);
+    const currentTask = tasks.find(task => task.id == currentTaskId);
 
     const taskCards = tasks.map(task => {
         // TODO: Real description, real image, rules, real categories
