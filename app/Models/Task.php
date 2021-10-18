@@ -13,5 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
+    protected $with = ['taskCategory'];
 
+    public function taskCategory()
+    {
+        return $this->belongsTo(TaskCategory::class);
+    }
 }
