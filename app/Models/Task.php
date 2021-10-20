@@ -19,4 +19,9 @@ class Task extends Model
     {
         return $this->belongsTo(TaskCategory::class);
     }
+
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
 }
