@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {TaskCard} from "./TaskCard";
 import {TaskView} from "./TaskView";
 
@@ -17,20 +17,33 @@ export const TaskIndex = ({}) => {
             .then(data => setTasks(data));
     }, []);
 
-    let {taskId} = useParams();
+    const {taskId} = useParams();
+    let history = useHistory();
+
     console.debug('Got Param: ', taskId);
     const [currentTaskId, setTaskId] = useState(taskId);
+
+    // Changes the current state and the URL to match the new task.
+    const onTaskClick = (task) => () => {
+        history.push(`/tasks/${task.id}`);
+        setTaskId(task.id);
+    };
+
+    useEffect(() => {
+        console.debug('Task ID changed. So we are setting it to the new value: ', taskId);
+        setTaskId(taskId);
+    }, [taskId]);
+
     const currentTask = tasks.find(task => task.id == currentTaskId);
-``
+
     const taskCards = tasks.map(task => {
-        // TODO: Real description, real image, rules, real categories
         return <div key={task.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
             <TaskCard
                 category={task.task_category?.name ?? 'No Category'}
                 title={task.name}
                 description={task.description ?? 'No Description'}
                 image={task.image}
-                onTaskClick={() => setTaskId(task.id)}
+                onTaskClick={onTaskClick(task)}
                 onCategoryClick={() => alert('Category not working: ' + task.task_category?.id)}/>
         </div>
     });
@@ -42,7 +55,7 @@ export const TaskIndex = ({}) => {
                 slug={currentTask.slug}
                 title={currentTask.name}
                 description={currentTask.description ?? 'No Description'}
-                category={currentTask.taskCategory.name ?? 'No Category'}
+                category={currentTask.task_category.name ?? 'No Category'}
                 image={currentTask.image}
                 onCategoryClick={() => alert('Category filter not working yet ' + currentTask.task_category.id)}/>
         </div> : null;
