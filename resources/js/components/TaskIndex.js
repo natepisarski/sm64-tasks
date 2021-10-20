@@ -3,12 +3,37 @@ import {useHistory, useParams} from "react-router";
 import {TaskCard} from "./TaskCard";
 import {TaskView} from "./TaskView";
 
+/** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
+const getTaskCards = (tasks, setCategoryFilter, onTaskClick) => tasks.map(task => <div key={task.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
+    <TaskCard
+        category={task.task_category?.name ?? 'No Category'}
+        title={task.name}
+        description={task.description ?? 'No Description'}
+        image={task.image}
+        onTaskClick={onTaskClick(task)}
+        onCategoryClick={() => setCategoryFilter(task.task_category?.name)}/>
+</div>);
+
+/** Gets the larger, expanded view of 1 particular task. */
+const getTaskView = (task, setCategoryFilter) => task ?
+    <div className={'grid col-span-12'}>
+        <TaskView
+            key={task.id}
+            slug={task.slug}
+            title={task.name}
+            description={task.description ?? 'No Description'}
+            category={task.task_category.name ?? 'No Category'}
+            image={task.image}
+            onCategoryClick={() => setCategoryFilter(currentTask.task_category.name)}/>
+    </div> : null;
 /**
  * This page shows a list of all the active tasks. When you select a task, it will show you an overlay of that task.
  * @returns {JSX.Element}
  * @constructor
  */
 export const TaskIndex = ({}) => {
+    const {taskId} = useParams();
+    let history = useHistory();
     let [tasks, setTasks] = useState([]);
     let [categoryFilter, setCategoryFilter] = useState(null);
 
@@ -18,10 +43,6 @@ export const TaskIndex = ({}) => {
             .then(data => setTasks(data));
     }, []);
 
-    const {taskId} = useParams();
-    let history = useHistory();
-
-    console.debug('Got Param: ', taskId);
     const [currentTaskId, setTaskId] = useState(taskId);
 
     // Changes the current state and the URL to match the new task.
@@ -31,7 +52,6 @@ export const TaskIndex = ({}) => {
     };
 
     useEffect(() => {
-        console.debug('Task ID changed. So we are setting it to the new value: ', taskId);
         setTaskId(taskId);
     }, [taskId]);
 
@@ -39,31 +59,10 @@ export const TaskIndex = ({}) => {
         tasks.filter(task => task.task_category?.name === categoryFilter)
         : tasks;
 
-    const currentTask = filteredTasks.find(task => task.id == currentTaskId);
+    const currentTask = tasks.find(task => task.id == currentTaskId);
 
-    const taskCards = filteredTasks.map(task => {
-        return <div key={task.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
-            <TaskCard
-                category={task.task_category?.name ?? 'No Category'}
-                title={task.name}
-                description={task.description ?? 'No Description'}
-                image={task.image}
-                onTaskClick={onTaskClick(task)}
-                onCategoryClick={() => setCategoryFilter(task.task_category?.name)}/>
-        </div>
-    });
-
-    const taskView = currentTask ?
-        <div className={'grid col-span-12'}>
-            <TaskView
-                key={currentTask.id}
-                slug={currentTask.slug}
-                title={currentTask.name}
-                description={currentTask.description ?? 'No Description'}
-                category={currentTask.task_category.name ?? 'No Category'}
-                image={currentTask.image}
-                onCategoryClick={() => setCategoryFilter(currentTask.task_category.name)}/>
-        </div> : null;
+    const taskCards = getTaskCards(filteredTasks, setCategoryFilter, onTaskClick);
+    const taskView = getTaskView(currentTask, setCategoryFilter);
 
     let currentTaskView = null;
     if (currentTaskId) {
