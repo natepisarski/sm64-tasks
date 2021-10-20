@@ -12,7 +12,7 @@ import {SiteHeader} from "./SiteHeader";
 export const Tasks = ({}) => {
     return <BrowserRouter>
         <SiteHeader/>
-        <div className={''}>
+        <div className={'p-5'}>
             <Switch>
                 <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
                 <Route path={'/tasks'} children={<TaskIndex/>}/>

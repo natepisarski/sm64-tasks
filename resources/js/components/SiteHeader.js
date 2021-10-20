@@ -25,7 +25,7 @@ export const SiteHeader = ({}) => {
                 </p>
             </div>
         </div>
-        <div className={'w-full flex flex-row justify-between'}>
+        <div className={'w-full flex flex-row justify-between mb-6 mx-3'}>
             <SiteNavigationBox title={'Tasks'} color={'bg-blue-400'} icon={'TASK'} description={'View tasks, seasons, and rules.'} onclick={goTo('/tasks')} />
             <SiteNavigationBox title={'Leaderboard'} color={'bg-gray-400'} icon={'LB'} description={'Size up the competition'} onclick={goTo('/leaderboard')} />
             <SiteNavigationBox title={'Community'} color={'bg-yellow-400'} icon={'CM'} description={`See who's competing, and their history.`} onclick={goTo('/players')} />
