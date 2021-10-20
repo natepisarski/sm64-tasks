@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router";
-import {TaskCard} from "./TaskCard";
+import {TaskCard} from "./Cards";
 import {TaskView} from "./TaskView";
 
 /** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
