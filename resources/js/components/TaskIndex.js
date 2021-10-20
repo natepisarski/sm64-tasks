@@ -10,6 +10,7 @@ import {TaskView} from "./TaskView";
  */
 export const TaskIndex = ({}) => {
     let [tasks, setTasks] = useState([]);
+    let [categoryFilter, setCategoryFilter] = useState(null);
 
     useEffect(() => {
         fetch('/api/tasks')
@@ -34,9 +35,13 @@ export const TaskIndex = ({}) => {
         setTaskId(taskId);
     }, [taskId]);
 
-    const currentTask = tasks.find(task => task.id == currentTaskId);
+    const filteredTasks = categoryFilter ?
+        tasks.filter(task => task.task_category?.name === categoryFilter)
+        : tasks;
 
-    const taskCards = tasks.map(task => {
+    const currentTask = filteredTasks.find(task => task.id == currentTaskId);
+
+    const taskCards = filteredTasks.map(task => {
         return <div key={task.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
             <TaskCard
                 category={task.task_category?.name ?? 'No Category'}
@@ -44,7 +49,7 @@ export const TaskIndex = ({}) => {
                 description={task.description ?? 'No Description'}
                 image={task.image}
                 onTaskClick={onTaskClick(task)}
-                onCategoryClick={() => alert('Category not working: ' + task.task_category?.id)}/>
+                onCategoryClick={() => setCategoryFilter(task.task_category?.name)}/>
         </div>
     });
 
@@ -57,7 +62,7 @@ export const TaskIndex = ({}) => {
                 description={currentTask.description ?? 'No Description'}
                 category={currentTask.task_category.name ?? 'No Category'}
                 image={currentTask.image}
-                onCategoryClick={() => alert('Category filter not working yet ' + currentTask.task_category.id)}/>
+                onCategoryClick={() => setCategoryFilter(currentTask.task_category.name)}/>
         </div> : null;
 
     let currentTaskView = null;
