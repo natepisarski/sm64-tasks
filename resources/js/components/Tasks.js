@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {TaskIndex} from "./TaskIndex";
-import {SiteNavigation} from "./SiteNavigation";
 import {SiteHeader} from "./SiteHeader";
 
 /**
@@ -12,17 +11,12 @@ import {SiteHeader} from "./SiteHeader";
  */
 export const Tasks = ({}) => {
     return <BrowserRouter>
-        <SiteHeader />
-        <div className={'grid grid-cols-12 w-full md:gap-x-4'}>
-            <div className={'grid col-span-12 md:col-span-2'}>
-                <SiteNavigation/>
-            </div>
-            <div className={'grid col-span-1 md:col-span-10'}>
-                <Switch>
-                    <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
-                    <Route path={'/tasks'} children={<TaskIndex/>}/>
-                </Switch>
-            </div>
+        <SiteHeader/>
+        <div className={''}>
+            <Switch>
+                <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
+                <Route path={'/tasks'} children={<TaskIndex/>}/>
+            </Switch>
         </div>
     </BrowserRouter>
 };
