@@ -14,7 +14,7 @@
 export const Leaderboard = ({leaderboardData}) => {
     const getPlayerRow = (player, score) => {
         // TODO: Styling, discord link
-        return <tr>
+        return <tr key={player.id}>
             <td>
                 {player.name}
             </td>

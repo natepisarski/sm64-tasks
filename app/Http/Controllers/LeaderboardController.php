@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Season;
 use App\Models\Task;
 
 /**
@@ -39,5 +40,10 @@ class LeaderboardController extends Controller
         }
 
         return $leaderboard;
+    }
+
+    public function getLeaderboardForSeason(Season $season)
+    {
+        // TODO: Implement season leaderboards
     }
 }

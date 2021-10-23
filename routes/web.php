@@ -16,9 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('api')->group(function () {
     Route::prefix('tasks')->group(function () {
         Route::get('', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
+
+        Route::prefix('{task}')->group(function () {
+            Route::get('leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderboardForTask'])->name('tasks.leaderboards.index');
+        });
     });
     Route::prefix('seasons')->group(function () {
         Route::get('', [\App\Http\Controllers\SeasonController::class, 'index'])->name('seasons.index');
+
+        Route::prefix('{season}')->group(function () {
+            Route::get('leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderboardForSeason'])->name('seasons.leaderboards.index');
+        });
     });
 });
 

@@ -19,12 +19,13 @@ const getTaskView = (task, setCategoryFilter) => task ?
     <div className={'grid col-span-12'}>
         <TaskView
             key={task.id}
+            id={task.id}
             slug={task.slug}
             title={task.name}
             description={task.description ?? 'No Description'}
             category={task.task_category.name ?? 'No Category'}
             image={task.image}
-            onCategoryClick={() => setCategoryFilter(currentTask.task_category.name)}/>
+            onCategoryClick={() => setCategoryFilter(task.task_category.name)}/>
     </div> : null;
 /**
  * This page shows a list of all the active tasks. When you select a task, it will show you an overlay of that task.
@@ -61,8 +62,13 @@ export const TaskIndex = ({}) => {
 
     const currentTask = tasks.find(task => task.id == currentTaskId);
 
-    const taskCards = getTaskCards(filteredTasks, setCategoryFilter, onTaskClick);
-    const taskView = getTaskView(currentTask, setCategoryFilter);
+    const onCategoryClick = (category) => {
+        history.push(`/tasks?category=${category}`);
+        setCategoryFilter(category);
+    };
+
+    const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick);
+    const taskView = getTaskView(currentTask, onCategoryClick);
 
     let currentTaskView = null;
     if (currentTaskId) {

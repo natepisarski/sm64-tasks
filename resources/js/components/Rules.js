@@ -17,4 +17,7 @@ export const Rules = ({slug}) => {
             console.debug('Was not a match: ', rule, rule[0], slug);
         }
     }
+
+    // If we get here, it means that no rules are defined for the task.
+    return <span className={'text-gray-500 font-semibold'}>There Are No Rules</span>
 };
