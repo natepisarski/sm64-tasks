@@ -13,16 +13,11 @@ class AddPlayersTable extends Migration
      */
     public function up()
     {
-        //
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
+        Schema::create('players', function (Blueprint $table) {
+            $table->id();
+            $table->text('name')->nullable();
+            $table->text('discord_identifier');
+            $table->timestamps(); // Created At will be equivalent to a joined_at column
+        });
     }
 }
