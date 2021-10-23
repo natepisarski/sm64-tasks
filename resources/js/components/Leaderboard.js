@@ -15,17 +15,19 @@ export const Leaderboard = ({leaderboardData}) => {
     const getPlayerRow = (player, score) => {
         // TODO: Styling, discord link
         return <tr key={player.id}>
-            <td>
+            <td className={'text-center'}>
                 {player.name}
             </td>
-            <td>
+            <td className={'text-center'}>
                 {score}
             </td>
         </tr>
     }
-    return <table>
-        <th>Player</th>
-        <th>Score</th>
+    return <table className={'w-24 text-2xl text-gray-600 mb-6'}>
+        <tr>
+            <th className={'text-center'}>Player</th>
+            <th className={'text-center'}>Score</th>
+        </tr>
         <tbody>
         {leaderboardData.map(data => {
             return getPlayerRow(data.player, data.score);
