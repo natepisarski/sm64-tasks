@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Player;
 use App\Models\Season;
 use App\Models\Task;
 
@@ -52,6 +53,8 @@ class LeaderboardController extends Controller
      */
     public function getLeaderboardForSeason(Season $season)
     {
+        $players = Player::all();
+
         $requiredData = $season->tasks()->with('players')->get();
 
         // This starts off as a map, between player_id and score. Like [4 => 12]
@@ -73,11 +76,11 @@ class LeaderboardController extends Controller
         $finalLeaderboard = [];
         foreach ($leaderboard as $playerId => $score) {
             array_push($finalLeaderboard, [
-                'player' => $seasonTask->players->where('id', $playerId)->first(),
+                'player' => $players->where('id', $playerId)->first(),
                 'score' => $score
             ]);
         }
 
-        return $leaderboard;
+        return $finalLeaderboard;
     }
 }

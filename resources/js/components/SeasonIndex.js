@@ -50,17 +50,21 @@ export const SeasonIndex = ({}) => {
 
     // When you click on a season, it sets the current season and changes the URL
     const onSeasonClick = (season) => () => {
+        console.debug('Triggering season click: ', season);
         setSeasonId(season.id);
         history.push(`/seasons/${season.id}`);
     };
 
     // When the season changes (from the URL, or from a click), we query the new leaderboard and set the current season.
     useEffect(() => {
-        setSeasonId(seasonId);
-        fetch(`/api/seasons/${seasonId}/leaderboard`)
-            .then(response => response.json())
-            .then(data => setSeasonLeaderboard(data));
-    }, [seasonId]);
+        console.debug('Going to try')
+        if (currentSeasonId) {
+            setSeasonId(currentSeasonId);
+            fetch(`/api/seasons/${currentSeasonId}/leaderboard`)
+                .then(response => response.json())
+                .then(data => setSeasonLeaderboard(data));
+        }
+    }, [currentSeasonId]);
 
     // If we have a current season (from click or URL), we have to find the season object that the ID correlates with.
     const currentSeason = seasons.find(season => season.id === currentSeasonId);
@@ -75,17 +79,18 @@ export const SeasonIndex = ({}) => {
     });
 
     const currentSeasonView = currentSeason ?
-        <SeasonView season={season} leaderboard={currentSeasonLeaderboard} onSeasonClick={goToUrl(`/tasks?seasonId=${season.id}`)}/>
-        : seasonComponents;
+        <SeasonView season={currentSeason} leaderboard={currentSeasonLeaderboard} onSeasonClick={goToUrl(`/tasks?seasonId=${currentSeason.id}`)}/>
+        : null;
 
     return <div className={'grid grid-cols-12 gap-4 '}>
         {currentSeasonView}
+        {seasonComponents}
     </div>
 }
 
 // The view when you're looking at just 1 season
 export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
-    return <div class={'grid col-span-12 justify-center'}>
+    return <div className={'grid col-span-12 justify-center'}>
         <div className={'text-4xl font-semibold text-center'}>{season.name}</div>
         <Leaderboard leaderboardData={leaderboard} />
         <button type={'button'} onClick={onSeasonClick}>View Tasks</button>
