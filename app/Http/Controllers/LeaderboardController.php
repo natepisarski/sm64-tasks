@@ -39,6 +39,8 @@ class LeaderboardController extends Controller
             ]);
         }
 
+        // Return scores ascending; 1 is the best score traditionally.
+        usort($leaderboard, fn ($position1, $position2) => $position1['score'] <=> $position2['score']);
         return $leaderboard;
     }
 
