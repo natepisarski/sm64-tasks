@@ -16,7 +16,7 @@ export const Card = ({title, hero, onClick, description, preTitle}) => {
 };
 
 export const SeasonCard = ({title, onSeasonClick}) => {
-    return <Card title={title} onClick={onSeasonClick} hero={<div className={''} style={'width: 256px; height: 256px;'}>{title.toUpperCase()}</div>} />
+    return <Card title={title} onClick={onSeasonClick} />
 };
 
 export const TaskCard = ({title, image, description, category, onCategoryClick, onTaskClick}) => {

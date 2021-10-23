@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {TaskIndex} from "./TaskIndex";
 import {SiteHeader} from "./SiteHeader";
 import {Redirect} from "react-router";
+import {SeasonIndex} from "./SeasonIndex";
 
 /**
  * This is the EntryPoint for the React app. From here we just set up the router. The individual pages each control
@@ -22,6 +23,7 @@ export const Tasks = ({}) => {
                 />
                 <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
                 <Route path={'/tasks'} children={<TaskIndex/>}/>
+                <Route path={'/seasons'} children={<SeasonIndex/>} />
             </Switch>
         </div>
     </BrowserRouter>

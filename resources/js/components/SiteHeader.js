@@ -1,13 +1,13 @@
 import {SiteNavigationBox} from "./SiteNavigationBox";
 import {useHistory, useLocation} from "react-router";
+import {goTo} from "../utilities";
 
 export const SiteHeader = ({}) => {
     let location = useLocation();
     const history = useHistory();
-    const goTo = url => () => {
-        console.debug('Trying to go to: ', url);
-        history.push(`${url}`);
-    };
+
+    const goToUrl = goTo(history);
+
     return <>
         <div className="relative bg-indigo-800 mb-6">
             <div className="absolute inset-0">
@@ -26,11 +26,12 @@ export const SiteHeader = ({}) => {
             </div>
         </div>
         <div className={'w-full flex flex-row justify-between mb-6 mx-3'}>
-            <SiteNavigationBox title={'Tasks'} color={'bg-blue-400'} icon={'TASK'} description={'View tasks, seasons, and rules.'} onclick={goTo('/tasks')} />
-            <SiteNavigationBox title={'Seasons'} color={'bg-gray-400'} icon={'LB'} description={'Size up the competition'} onclick={goTo('/leaderboard')} />
-            <SiteNavigationBox title={'Leaderboards'} color={'bg-yellow-400'} icon={'CM'} description={`See who's competing, and their history.`} onclick={goTo('/players')} />
-            <SiteNavigationBox title={'Learn'} color={'bg-purple-400'} icon={'LN'} description={'FAQ, Learn More, etc.'} onclick={goTo('/learn')} />
-            <SiteNavigationBox title={'Special'} color={'bg-gray-500'} icon={'SP'} description={'Used for special events.'} onclick={goTo('/special')} disabled={true} />
+            <SiteNavigationBox title={'Tasks'} color={'bg-blue-400'} icon={'TASK'} description={'View tasks and rules.'} onclick={goToUrl('/tasks')} />
+            <SiteNavigationBox title={'Seasons'} color={'bg-purple-400'} icon={'SEASON'} description={'View a list of all seasons'} onclick={goToUrl('/seasons')} />
+            {/*<SiteNavigationBox title={'Seasons'} color={'bg-gray-400'} icon={'LB'} description={'Size up the competition'} onclick={goToUrl('/leaderboard')} />*/}
+            {/*<SiteNavigationBox title={'Leaderboards'} color={'bg-yellow-400'} icon={'CM'} description={`See who's competing, and their history.`} onclick={goToUrl('/players')} />*/}
+            {/*<SiteNavigationBox title={'Learn'} color={'bg-purple-400'} icon={'LN'} description={'FAQ, Learn More, etc.'} onclick={goTo('/learn')} />*/}
+            {/*<SiteNavigationBox title={'Special'} color={'bg-gray-500'} icon={'SP'} description={'Used for special events.'} onclick={goTo('/special')} disabled={true} />*/}
         </div>
     </>
 };

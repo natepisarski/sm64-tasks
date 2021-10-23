@@ -55,8 +55,8 @@ export const WdwFloorIsLavaRules = () => {
                 <div className={'text-3xl my-6'}>Hints</div>
 
                 <ul className={'list-disc'}>
-                    <li> - The first 10 coins are by far the hardest</li>
-                    <li> - Without giving an exact number; it's possible to get more than 50 coins.</li>
+                    <li>The first 10 coins are by far the hardest</li>
+                    <li>Without giving an exact number; it's possible to get more than 50 coins.</li>
                 </ul>
 
                 <div className={'text-3xl my-6'}>Edge Cases</div>

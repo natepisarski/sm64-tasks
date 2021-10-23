@@ -23,7 +23,7 @@
 
         <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     </head>
-    <body class="antialiased">
+    <body class="antialiased bg-gray-100">
         <div id="react-root" class="w-full"></div>
     </body>
 </html>
