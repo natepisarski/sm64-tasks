@@ -24,6 +24,7 @@ export const Tasks = ({}) => {
                 <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
                 <Route path={'/tasks'} children={<TaskIndex/>}/>
                 <Route path={'/seasons'} children={<SeasonIndex/>} />
+                <Route path={'/seasons/:seasonId'} children={<SeasonIndex/>} />
             </Switch>
         </div>
     </BrowserRouter>

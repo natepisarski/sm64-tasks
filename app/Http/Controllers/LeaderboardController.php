@@ -23,6 +23,8 @@ use App\Models\Task;
  */
 class LeaderboardController extends Controller
 {
+    // TODO: EVERYTHING IN THIS CONTROLLER SHOULD BE MODEL METHODS
+
     /**
      * Returns the leaderboard for 1 task.
      * @param Task $task The task object
@@ -44,8 +46,38 @@ class LeaderboardController extends Controller
         return $leaderboard;
     }
 
+    /**
+     * A season's leaderboard is the summation of all task leaderboards in that season.
+     * @param Season $season
+     */
     public function getLeaderboardForSeason(Season $season)
     {
-        // TODO: Implement season leaderboards
+        $requiredData = $season->tasks()->with('players')->get();
+
+        // This starts off as a map, between player_id and score. Like [4 => 12]
+        $leaderboard = [
+        ];
+
+        // For each task in a season, we keep a running total.
+        foreach ($requiredData as $seasonTask) {
+            foreach($seasonTask->players as $seasonTaskPlayer) {
+                if (array_key_exists($seasonTaskPlayer->id, $leaderboard)) {
+                    $leaderboard[$seasonTaskPlayer->id] += $seasonTaskPlayer->pivot->score;
+                } else {
+                    $leaderboard[$seasonTaskPlayer->id] = $seasonTaskPlayer->pivot->score;
+                }
+            }
+        }
+
+        // Now that we have our mapping between players and points, we need to put it into the format the React expects.
+        $finalLeaderboard = [];
+        foreach ($leaderboard as $playerId => $score) {
+            array_push($finalLeaderboard, [
+                'player' => $seasonTask->players->where('id', $playerId)->first(),
+                'score' => $score
+            ]);
+        }
+
+        return $leaderboard;
     }
 }

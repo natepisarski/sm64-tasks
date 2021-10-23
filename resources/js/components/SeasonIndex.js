@@ -2,8 +2,9 @@
  * click on it, it will taske you to the Tasks view, filtered to that season. */
 import {useEffect, useState} from "react";
 import {SeasonCard} from "./Cards";
-import {useHistory} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {getRandomItemFromArray, goTo} from "../utilities";
+import {Leaderboard} from "./Leaderboard";
 
 const getRandomCardColor = () => {
     // According to the 4-color theorem, we can show a grid of tasks without any 2 colors touching with only 4 colors. Now, we don't
@@ -28,6 +29,8 @@ const getRandomCardColor = () => {
  * @constructor
  */
 export const SeasonIndex = ({}) => {
+    const {seasonId} = useParams();
+
     const history = useHistory();
     const goToUrl = goTo(history);
 
@@ -35,22 +38,56 @@ export const SeasonIndex = ({}) => {
     // have to worry about anything but the API call and the rendering.
     const [seasons, setSeasons] = useState([]);
 
+    const [currentSeasonId, setSeasonId] = useState(seasonId);
+    const [currentSeasonLeaderboard, setSeasonLeaderboard] = useState([]);
+
+    // On the initial page load we need to pull a list of all seasons.
     useEffect(() => {
         fetch('/api/seasons')
             .then(response => response.json())
             .then(data => setSeasons(data));
     }, []);
 
+    // When you click on a season, it sets the current season and changes the URL
+    const onSeasonClick = (season) => () => {
+        setSeasonId(season.id);
+        history.push(`/seasons/${season.id}`);
+    };
+
+    // When the season changes (from the URL, or from a click), we query the new leaderboard and set the current season.
+    useEffect(() => {
+        setSeasonId(seasonId);
+        fetch(`/api/seasons/${seasonId}/leaderboard`)
+            .then(response => response.json())
+            .then(data => setSeasonLeaderboard(data));
+    }, [seasonId]);
+
+    // If we have a current season (from click or URL), we have to find the season object that the ID correlates with.
+    const currentSeason = seasons.find(season => season.id === currentSeasonId);
+
     const seasonComponents = seasons.map(season => {
         return <SeasonCard
             key={season.id}
             title={season.name}
-            onSeasonClick={goToUrl(`/tasks?seasonId=${season.id}`)}
+            onSeasonClick={onSeasonClick(season)}
             color={getRandomCardColor()}
         />
     });
 
+    const currentSeasonView = currentSeason ?
+        <SeasonView season={season} leaderboard={currentSeasonLeaderboard} onSeasonClick={goToUrl(`/tasks?seasonId=${season.id}`)}/>
+        : seasonComponents;
+
     return <div className={'grid grid-cols-12 gap-4 '}>
-        {seasonComponents}
+        {currentSeasonView}
     </div>
 }
+
+// The view when you're looking at just 1 season
+export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
+    return <div class={'grid col-span-12 justify-center'}>
+        <div className={'text-4xl font-semibold text-center'}>{season.name}</div>
+        <Leaderboard leaderboardData={leaderboard} />
+        <button type={'button'} onClick={onSeasonClick}>View Tasks</button>
+    </div>
+};
