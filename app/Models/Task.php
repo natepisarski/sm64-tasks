@@ -24,4 +24,9 @@ class Task extends Model
     {
         return $this->belongsTo(Season::class);
     }
+
+    public function players()
+    {
+        return $this->belongsToMany(Player::class)->withPivot(['score']);
+    }
 }

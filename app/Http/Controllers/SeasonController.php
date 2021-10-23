@@ -9,6 +9,7 @@ class SeasonController extends Controller
 {
     public function index()
     {
+        // TODO: Start returning this with a resource
         return Season::with('tasks')->get();
     }
 }
