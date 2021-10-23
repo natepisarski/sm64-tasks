@@ -1,11 +1,11 @@
 // TODO: Should probably refactor to take a Task object
 
-export const Card = ({title, hero, onClick, description, preTitle}) => {
-    return <div key={title} className={'flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer'} onClick={onClick}>
+export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white'}) => {
+    return <div key={title} className={'flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-md'} onClick={onClick}>
         <div className={'flex-shrink-0'}>
             {hero}
         </div>
-        <div className={'flex-1 bg-white p-6 flex flex-col justify-between'}>
+        <div className={`flex-1 ${color} p-6 flex flex-col justify-between hover:bg-blue-200`}>
             {preTitle}
             <div onClick={onClick} className="block mt-2">
                 <p className="text-xl font-semibold text-gray-900 hover:text-blue-600 hover:underline">{title}</p>
@@ -15,8 +15,8 @@ export const Card = ({title, hero, onClick, description, preTitle}) => {
     </div>
 };
 
-export const SeasonCard = ({title, onSeasonClick}) => {
-    return <Card title={title} onClick={onSeasonClick} />
+export const SeasonCard = ({title, onSeasonClick, color}) => {
+    return <Card title={title} onClick={onSeasonClick} color={color} />
 };
 
 export const TaskCard = ({title, image, description, category, onCategoryClick, onTaskClick}) => {

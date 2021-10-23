@@ -3,7 +3,23 @@
 import {useEffect, useState} from "react";
 import {SeasonCard} from "./Cards";
 import {useHistory} from "react-router";
-import {goTo} from "../utilities";
+import {getRandomItemFromArray, goTo} from "../utilities";
+
+const getRandomCardColor = () => {
+    // According to the 4-color theorem, we can show a grid of tasks without any 2 colors touching with only 4 colors. Now, we don't
+    // know how wide the screen is, so we increase the number of colors to prevent the likelihood of a clash.
+    // There's probably some algorithm to figure this out but CBA
+    const possibleColors = [
+        'bg-red-200',
+        'bg-green-200',
+        'bg-purple-200',
+        'bg-yellow-300',
+        'bg-indigo-200',
+        'bg-pink-200',
+    ];
+
+    return getRandomItemFromArray(possibleColors);
+};
 
 export const SeasonIndex = ({}) => {
     const history = useHistory();
@@ -23,10 +39,12 @@ export const SeasonIndex = ({}) => {
         return <SeasonCard
             key={season.id}
             title={season.name}
-            onSeasonClick={goToUrl(`/tasks?seasonId=${season.id}`)} />
+            onSeasonClick={goToUrl(`/tasks?seasonId=${season.id}`)}
+            color={getRandomCardColor()}
+        />
     });
 
-    return <div className={'grid grid-cols-12'}>
+    return <div className={'grid grid-cols-12 gap-4 '}>
         {seasonComponents}
     </div>
 }
