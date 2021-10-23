@@ -21,6 +21,12 @@ const getRandomCardColor = () => {
     return getRandomItemFromArray(possibleColors);
 };
 
+/**
+ * Root view for the seasons. This will display a list of all the seasons, and potentially a leaderboard for a season
+ * if a season is clicked.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const SeasonIndex = ({}) => {
     const history = useHistory();
     const goToUrl = goTo(history);
