@@ -34,11 +34,14 @@ export const SeasonIndex = ({}) => {
     const history = useHistory();
     const goToUrl = goTo(history);
 
+    console.debug('Got this season ID: ', seasonId);
+
     // Here, when a season is clicked it doesn't take up the whole screen. So actually, there's no state. We don't
     // have to worry about anything but the API call and the rendering.
     const [seasons, setSeasons] = useState([]);
 
     const [currentSeasonId, setSeasonId] = useState(seasonId);
+    console.debug('Current Season ID: ', currentSeasonId);
     const [currentSeasonLeaderboard, setSeasonLeaderboard] = useState([]);
 
     // On the initial page load we need to pull a list of all seasons.
@@ -67,8 +70,9 @@ export const SeasonIndex = ({}) => {
     }, [currentSeasonId]);
 
     // If we have a current season (from click or URL), we have to find the season object that the ID correlates with.
-    const currentSeason = seasons.find(season => season.id === currentSeasonId);
+    const currentSeason = seasons.find(season => season.id == currentSeasonId);
 
+    // Represents a list of ALL the season. This is always shown on the bottom.
     const seasonComponents = seasons.map(season => {
         return <SeasonCard
             key={season.id}
@@ -78,6 +82,7 @@ export const SeasonIndex = ({}) => {
         />
     });
 
+    // Zooms in on one particular season. It will show the leaderboard for that season and let you view the tasks.
     const currentSeasonView = currentSeason ?
         <SeasonView season={currentSeason} leaderboard={currentSeasonLeaderboard} onSeasonClick={goToUrl(`/tasks?seasonId=${currentSeason.id}`)}/>
         : null;
