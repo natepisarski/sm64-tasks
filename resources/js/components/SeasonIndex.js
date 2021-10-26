@@ -84,7 +84,8 @@ export const SeasonIndex = ({}) => {
 
     // Zooms in on one particular season. It will show the leaderboard for that season and let you view the tasks.
     const currentSeasonView = currentSeason ?
-        <SeasonView season={currentSeason} leaderboard={currentSeasonLeaderboard} onSeasonClick={goToUrl(`/tasks?seasonId=${currentSeason.id}`)}/>
+        <SeasonView season={currentSeason} leaderboard={currentSeasonLeaderboard}
+                    onSeasonClick={goToUrl(`/tasks?seasonId=${currentSeason.id}`)}/>
         : null;
 
     return <div className={'grid grid-cols-12 gap-4 '}>
@@ -97,7 +98,15 @@ export const SeasonIndex = ({}) => {
 export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
     return <div className={'grid col-span-12 justify-center'}>
         <div className={'text-4xl font-semibold text-center'}>{season.name}</div>
-        <Leaderboard leaderboardData={leaderboard} />
-        <button type={'button'} onClick={onSeasonClick}>View Tasks</button>
+        <Leaderboard leaderboardData={leaderboard}/>
+        <div className={'flex justify-center'}>
+            <button
+                type="button"
+                onClick={onSeasonClick}
+                className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                View Tasks
+            </button>
+        </div>
     </div>
 };
