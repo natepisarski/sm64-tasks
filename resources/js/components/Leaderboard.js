@@ -14,11 +14,11 @@
 export const Leaderboard = ({leaderboardData}) => {
     const getPlayerRow = (player, score) => {
         // TODO: Styling, discord link
-        return <tr key={player.id}>
-            <td className={'text-center'}>
+        return <tr key={player.id} className={'border-b-2 border-gray-200'}>
+            <td className={'text-center p-3'}>
                 {player.name}
             </td>
-            <td className={'text-center'}>
+            <td className={'text-center p-3'}>
                 {score}
             </td>
         </tr>
@@ -28,8 +28,8 @@ export const Leaderboard = ({leaderboardData}) => {
         return <div />
     }
 
-    return <table className={'w-24 text-2xl text-gray-600 mb-6'}>
-        <thead>
+    return <table className={'text-2xl text-gray-600 mb-6'} style={{width: '25vw'}}>
+        <thead className={'bg-gray-700 text-white rounded-sm'}>
             <tr>
                 <th className={'text-center'}>Player</th>
                 <th className={'text-center'}>Score</th>

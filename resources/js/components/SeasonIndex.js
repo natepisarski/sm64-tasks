@@ -97,13 +97,13 @@ export const SeasonIndex = ({}) => {
 // The view when you're looking at just 1 season
 export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
     return <div className={'grid col-span-12 justify-center'}>
-        <div className={'text-4xl font-semibold text-center'}>{season.name}</div>
+        <div className={'text-4xl font-semibold text-center mb-2'}>{season.name}</div>
         <Leaderboard leaderboardData={leaderboard}/>
         <div className={'flex justify-center'}>
             <button
                 type="button"
                 onClick={onSeasonClick}
-                className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
                 View Tasks
             </button>
