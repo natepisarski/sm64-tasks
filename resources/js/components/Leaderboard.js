@@ -31,8 +31,8 @@ export const Leaderboard = ({leaderboardData}) => {
     return <table className={'text-2xl text-gray-600 mb-6'} style={{width: '25vw'}}>
         <thead className={'bg-gray-700 text-white rounded-sm'}>
             <tr>
-                <th className={'text-center'}>Player</th>
-                <th className={'text-center'}>Score</th>
+                <th className={'text-center p-3'}>Player</th>
+                <th className={'text-center p-3'}>Score</th>
             </tr>
         </thead>
         <tbody>
