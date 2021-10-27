@@ -1,6 +1,10 @@
 // TODO: Should probably refactor to take a Task object
 import moment from 'moment';
 
+/**
+ * A generic Card component. This has some slots for putting whatever you want in, and can show
+ * a large hero section; whether that's an image or just a piece of text.
+ */
 export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white', children}) => {
     return <div key={title}
                 className={'flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-md'}
@@ -19,10 +23,17 @@ export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-w
     </div>
 };
 
+/**
+ * A Card for seasons. We don't have as much data for seasons as we do for Tasks, so this is much slimmer.
+ */
 export const SeasonCard = ({title, onSeasonClick, color}) => {
     return <Card title={title} onClick={onSeasonClick} color={color}/>
 };
 
+/**
+ * A Card for showing the preview for 1 particular Task. This is one of the most important components in all of
+ * sm64tasks, so it will likely grow in complexity even more as the site grows.
+ */
 export const TaskCard = ({
                              title,
                              image,
@@ -47,11 +58,18 @@ export const TaskCard = ({
         return moment(dateTime).format('MMM Do YY');
     };
 
+    // If this task has already ended, we want to give it a slight gray look.
+    let color = 'bg-white';
+    if (endedAt && moment(endedAt).isBefore(moment())) {
+        color = 'bg-gray-300';
+    }
+
     return <Card
         title={title}
         hero={renderedImage}
         onClick={onTaskClick}
         description={description}
+        color={color}
         preTitle={clickableCategory}>
         {/* We want to show the dates, and the season. */}
         <div className={'flex flex-col w-full gap-y-2'}>
