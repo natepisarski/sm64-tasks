@@ -22,7 +22,7 @@ export const SeasonCard = ({title, onSeasonClick, color}) => {
 export const TaskCard = ({title, image, description, category, onCategoryClick, onTaskClick}) => {
     const renderedImage = <img width={256} height={256} className="h-48 w-full object-cover" src={image} alt="" />;
     const clickableCategory = <div className="text-sm font-medium text-indigo-600">
-        <div className="text-purple-500 hover:underline" onClick={onCategoryClick}>
+        <div className="text-purple-500 hover:underline" onClick={evt => {evt.stopPropagation(); onCategoryClick();}}>
             {category}
         </div>
     </div>;

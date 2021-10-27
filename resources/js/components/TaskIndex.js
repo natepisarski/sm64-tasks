@@ -3,9 +3,11 @@ import {useHistory, useLocation, useParams} from "react-router";
 import {TaskCard} from "./Cards";
 import {TaskView} from "./TaskView";
 import * as queryString from 'query-string';
+import {Filters} from "./Filters";
 
 /** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
-const getTaskCards = (tasks, setCategoryFilter, onTaskClick) => tasks.map(task => <div key={task.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
+const getTaskCards = (tasks, setCategoryFilter, onTaskClick) => tasks.map(task => <div key={task.id}
+                                                                                       className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
     <TaskCard
         category={task.task_category?.name ?? 'No Category'}
         title={task.name}
@@ -45,6 +47,11 @@ export const TaskIndex = ({}) => {
     let [categoryFilter, setCategoryFilter] = useState(category);
     let [seasonFilter, setSeasonFilter] = useState(seasonId);
 
+    useEffect(() => {
+        setCategoryFilter(category);
+        setSeasonFilter(seasonId);
+    }, [location]);
+
     const [currentTaskId, setTaskId] = useState(taskId);
 
     // Load all tasks from the backend.
@@ -73,6 +80,12 @@ export const TaskIndex = ({}) => {
 
     // Sets a category filter; this will only show certain categories.
     const onCategoryClick = (category) => {
+        if (!category) {
+            history.push('/tasks');
+            setCategoryFilter(null);
+            return null;
+        }
+
         history.push(`/tasks?category=${category}`);
         setCategoryFilter(category);
 
@@ -80,10 +93,23 @@ export const TaskIndex = ({}) => {
         onTaskClick(null);
     };
 
+    // Sets the filter for the desired season. Only tasks from that season will show up.
+    const onSeasonClick = (season) => {
+        if (!season) {
+            history.push('/tasks');
+            setSeasonFilter(null);
+            return null;
+        }
+
+        history.push(`/tasks?seasonId=${season}`);
+        setSeasonFilter(season);
+        onTaskClick(null);
+    };
+
     // TODO: Can be combined to be more efficient but meh. Readability trumps everything else.
     const filteredTasks = tasks
         .filter(task => !categoryFilter || task.task_category.name == categoryFilter)
-        .filter(task => !seasonFilter || task.season_id ==  seasonId);
+        .filter(task => !seasonFilter || task.season_id == seasonId);
 
     const currentTask = tasks.find(task => task.id == currentTaskId);
 
@@ -91,13 +117,22 @@ export const TaskIndex = ({}) => {
     const taskView = getTaskView(currentTask, onCategoryClick);
 
     let currentTaskView = null;
+    let currentFilterBar = null;
+
     if (currentTaskId) {
         currentTaskView = taskView;
     } else {
         currentTaskView = taskCards;
+        currentFilterBar = <Filters tuples={[
+            ['Category', categoryFilter, () => onCategoryClick(null)],
+            ['Season', seasonFilter, () => onSeasonClick(null)],
+        ]}/>
     }
-    
-    return <div className={'grid grid-cols-12'}>
+
+    return <div className={'grid grid-cols-12 gap-y-2'}>
+        <div className={'grid col-span-12'}>
+            {currentFilterBar}
+        </div>
         {currentTaskView}
     </div>
 }

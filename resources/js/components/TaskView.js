@@ -18,15 +18,19 @@ export const TaskView = ({id, title, image, description, category, slug, onCateg
     return <div className={'p-12'}>
 
         <div className={'text-4xl font-semibold text-center'}>{title}</div>
-        <div className={'text-purple-500 text-sm font-medium hover:underline mb-4 text-center'} onClick={onCategoryClick}>{category}</div>
+        <div
+            className={'text-purple-500 text-sm font-medium hover:underline mb-4 text-center cursor-pointer'}
+            onClick={onCategoryClick}>
+            {category}
+        </div>
         <p className={'text-gray-500 text-base mb-5 text-center'}>{description}</p>
         <div className={'flex flex-row w-full justify-center'}>
-            <Leaderboard leaderboardData={leaderboard} />
+            <Leaderboard leaderboardData={leaderboard}/>
         </div>
         <div className={'flex flex-row w-full justify-center mb-5'}>
-            <img src={image} />
+            <img src={image}/>
         </div>
         <div className={'text-2xl font-semibold text-4xl'}>Rules</div>
-        <Rules slug={slug} />
+        <Rules slug={slug}/>
     </div>
 };
