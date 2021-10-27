@@ -10,6 +10,7 @@ class TaskController extends Controller
     public function index()
     {
         // TODO: Start returning this with a resource.
-        return Task::all();
+        $sorted = Task::all()->sortByDesc('ended_at');
+        return $sorted->values();
     }
 }

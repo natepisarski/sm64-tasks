@@ -1,4 +1,5 @@
 import {WdwFloorIsLavaRules} from "./rules/WdwFloorIsLavaRules";
+import {WfGreenDemonRules} from "./rules/WfGreenDemonRules";
 
 /**
  * The root Rules component. Depending on the slug, this can show any arbitrary rules for your task.
@@ -7,7 +8,8 @@ import {WdwFloorIsLavaRules} from "./rules/WdwFloorIsLavaRules";
 export const Rules = ({slug}) => {
     console.debug('Finding a rule: ', slug);
     const ruleSet = [
-        ['wdw-floor-is-lava', <WdwFloorIsLavaRules />]
+        ['wdw-floor-is-lava', <WdwFloorIsLavaRules />],
+        ['wf-green-demon', <WfGreenDemonRules />]
     ];
 
     for (const rule of ruleSet) {

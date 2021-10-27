@@ -113,6 +113,7 @@ export const TaskIndex = ({}) => {
     };
 
     // TODO: Can be combined to be more efficient but meh. Readability trumps everything else.
+    console.debug('About to filter: ', tasks);
     const filteredTasks = tasks
         .filter(task => !categoryFilter || task.task_category.name == categoryFilter)
         .filter(task => !seasonFilter || task.season_id == seasonId);
