@@ -6,7 +6,7 @@ import * as queryString from 'query-string';
 import {Filters} from "./Filters";
 
 /** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
-const getTaskCards = (tasks, setCategoryFilter, onTaskClick) => tasks.map(task => <div key={task.id}
+const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick) => tasks.map(task => <div key={task.id}
                                                                                        className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
     <TaskCard
         category={task.task_category?.name ?? 'No Category'}
@@ -14,7 +14,12 @@ const getTaskCards = (tasks, setCategoryFilter, onTaskClick) => tasks.map(task =
         description={task.description ?? 'No Description'}
         image={task.image}
         onTaskClick={onTaskClick(task)}
-        onCategoryClick={() => setCategoryFilter(task.task_category?.name)}/>
+        onCategoryClick={() => setCategoryFilter(task.task_category?.name)}
+        seasonName={task.season?.name}
+        onSeasonClick={() => onSeasonClick(task.season.id)}
+        startedAt={task.started_at}
+        endedAt={task.ended_at}
+    />
 </div>);
 
 /** Gets the larger, expanded view of 1 particular task. */
@@ -103,6 +108,7 @@ export const TaskIndex = ({}) => {
 
         history.push(`/tasks?seasonId=${season}`);
         setSeasonFilter(season);
+        console.debug('Just set season filter: ', season);
         onTaskClick(null);
     };
 
@@ -113,7 +119,7 @@ export const TaskIndex = ({}) => {
 
     const currentTask = tasks.find(task => task.id == currentTaskId);
 
-    const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick);
+    const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick, onSeasonClick);
     const taskView = getTaskView(currentTask, onCategoryClick);
 
     let currentTaskView = null;
@@ -129,7 +135,7 @@ export const TaskIndex = ({}) => {
         ]}/>
     }
 
-    return <div className={'grid grid-cols-12 gap-y-2'}>
+    return <div className={'grid grid-cols-12 gap-y-2 gap-x-4'}>
         <div className={'grid col-span-12'}>
             {currentFilterBar}
         </div>

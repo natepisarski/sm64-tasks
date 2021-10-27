@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
-    protected $with = ['taskCategory'];
+    protected $with = ['taskCategory', 'season'];
 
     public function taskCategory()
     {
