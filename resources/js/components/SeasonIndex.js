@@ -84,6 +84,7 @@ export const SeasonIndex = ({}) => {
             title={season.name}
             onSeasonClick={onSeasonClick(season)}
             color={season.ended_at === null ? 'bg-white' : 'bg-gray-200'}
+            border={season.ended_at === null ? 'border-2 border-red-200 hover:border-4' : 'border-2 border-gray-100'}
         />
     });
 
