@@ -36,7 +36,7 @@ export const Leaderboard = ({leaderboardData}) => {
             </tr>
         </thead>
         <tbody>
-        {leaderboardData.map(data => {
+        {leaderboardData.sort((first, second) => first.score > second.score).map(data => {
             return getPlayerRow(data.player, data.score);
         })}
         </tbody>
