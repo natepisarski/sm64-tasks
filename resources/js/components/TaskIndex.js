@@ -136,7 +136,7 @@ export const TaskIndex = ({}) => {
         ]}/>
     }
 
-    return <div className={'grid grid-cols-12 gap-y-2 gap-x-4'}>
+    return <div className={'grid grid-cols-12 gap-4'}>
         <div className={'grid col-span-12'}>
             {currentFilterBar}
         </div>

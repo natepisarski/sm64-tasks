@@ -5,6 +5,7 @@ import {SeasonCard} from "./Cards";
 import {useHistory, useParams} from "react-router";
 import {getRandomItemFromArray, goTo} from "../utilities";
 import {Leaderboard} from "./Leaderboard";
+import moment from "moment";
 
 const getRandomCardColor = () => {
     // According to the 4-color theorem, we can show a grid of tasks without any 2 colors touching with only 4 colors. Now, we don't
@@ -72,15 +73,22 @@ export const SeasonIndex = ({}) => {
     // If we have a current season (from click or URL), we have to find the season object that the ID correlates with.
     const currentSeason = seasons.find(season => season.id == currentSeasonId);
 
-    // Represents a list of ALL the season. This is always shown on the bottom.
-    const seasonComponents = seasons.map(season => {
+    // We want to show the seasons grouped by 2 Criteria: Is Current, Is Past. We don't actually check the dates;
+    // a Season which starts in the future, but has not yet ended is considered "current"
+    const currentSeasons = seasons.filter(season => season.ended_at === null);
+    const pastSeasons = seasons.filter(season => season.ended_at !== null);
+
+    const getSeasons = (theSeasons) => theSeasons.map(season => {
         return <SeasonCard
             key={season.id}
             title={season.name}
             onSeasonClick={onSeasonClick(season)}
-            color={getRandomCardColor()}
+            color={season.ended_at === null ? 'bg-white' : 'bg-gray-200'}
         />
     });
+
+    const currentSeasonComponents = getSeasons(currentSeasons);
+    const pastSeasonComponents = getSeasons(pastSeasons);
 
     // Zooms in on one particular season. It will show the leaderboard for that season and let you view the tasks.
     const currentSeasonView = currentSeason ?
@@ -90,7 +98,10 @@ export const SeasonIndex = ({}) => {
 
     return <div className={'grid grid-cols-12 gap-4 '}>
         {currentSeasonView}
-        {seasonComponents}
+
+        {currentSeasonComponents}
+        <div className={'col-span-12'}></div>
+        {pastSeasonComponents}
     </div>
 }
 

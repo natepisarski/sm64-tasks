@@ -5,9 +5,9 @@ import moment from 'moment';
  * A generic Card component. This has some slots for putting whatever you want in, and can show
  * a large hero section; whether that's an image or just a piece of text.
  */
-export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white', children}) => {
+export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white', border = '', children}) => {
     return <div key={title}
-                className={'flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-md'}
+                className={`flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-md ${border}`}
                 onClick={onClick}>
         <div className={'flex-shrink-0'}>
             {hero}
@@ -26,8 +26,8 @@ export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-w
 /**
  * A Card for seasons. We don't have as much data for seasons as we do for Tasks, so this is much slimmer.
  */
-export const SeasonCard = ({title, onSeasonClick, color}) => {
-    return <Card title={title} onClick={onSeasonClick} color={color}/>
+export const SeasonCard = ({title, onSeasonClick, color, border}) => {
+    return <Card title={title} onClick={onSeasonClick} color={color} border={border}/>
 };
 
 /**
@@ -61,7 +61,7 @@ export const TaskCard = ({
     // If this task has already ended, we want to give it a slight gray look.
     let color = 'bg-white';
     if (endedAt && moment(endedAt).isBefore(moment())) {
-        color = 'bg-gray-300';
+        color = 'bg-gray-200';
     }
 
     return <Card
@@ -77,7 +77,7 @@ export const TaskCard = ({
                 <div className={'flex flex-1'}>
                     {clickableSeason}
                 </div>
-                <div className={'flex flex-1 text-sm font-light text-gray-700'}>
+                <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700'}>
                     {formatDateTime(startedAt)} - {formatDateTime(endedAt)}
                 </div>
             </div>
