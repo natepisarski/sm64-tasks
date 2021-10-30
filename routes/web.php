@@ -28,6 +28,9 @@ Route::prefix('api')->group(function () {
             Route::get('leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderboardForSeason'])->name('seasons.leaderboards.index');
         });
     });
+    Route::prefix('players')->group(function () {
+        Route::get('', [\App\Http\Controllers\PlayerController::class, 'index'])->name('players.index');
+    });
 });
 
 Route::view('/{path?}', 'react-root')

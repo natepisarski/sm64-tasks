@@ -7,22 +7,6 @@ import {getRandomItemFromArray, goTo} from "../utilities";
 import {Leaderboard} from "./Leaderboard";
 import moment from "moment";
 
-const getRandomCardColor = () => {
-    // According to the 4-color theorem, we can show a grid of tasks without any 2 colors touching with only 4 colors. Now, we don't
-    // know how wide the screen is, so we increase the number of colors to prevent the likelihood of a clash.
-    // There's probably some algorithm to figure this out but CBA
-    const possibleColors = [
-        'bg-red-200',
-        'bg-green-200',
-        'bg-purple-200',
-        'bg-yellow-300',
-        'bg-indigo-200',
-        'bg-pink-200',
-    ];
-
-    return getRandomItemFromArray(possibleColors);
-};
-
 /**
  * Root view for the seasons. This will display a list of all the seasons, and potentially a leaderboard for a season
  * if a season is clicked.
