@@ -63,13 +63,19 @@ export const PlayerView = ({player}) => {
     return <div className={'list-none mb-6'}>
         <PlayerBubble player={player}/>
         <div className={'flex flex-row w-full justify-center my-5'}>
-            <Leaderboard
-                leaderboardData={player.tasks}
-                leftColumnAccessor={task => task}
-                leftColumnName={'Task'}
-                leftColumnFormatter={task => <Link className={'text-purple-500 hover:underline'} to={`/tasks/${task.id}`}>{task.name}</Link>}
-                scoreAccessor={task => task.pivot.score}
-            />
+            <div className={'flex flex-col'}>
+                <div className={'flex flex-row justify-center font-semibold'}>
+                    TaskScore: <span className={'font-bold text-blue-500 ml-2'}>5</span>
+                </div>
+                <Leaderboard
+                    leaderboardData={player.tasks}
+                    leftColumnAccessor={task => task}
+                    leftColumnName={'Task'}
+                    leftColumnFormatter={task => <Link className={'text-purple-500 hover:underline'}
+                                                       to={`/tasks/${task.id}`}>{task.name}</Link>}
+                    scoreAccessor={task => task.pivot.score}
+                />
+            </div>
         </div>
     </div>
 };
