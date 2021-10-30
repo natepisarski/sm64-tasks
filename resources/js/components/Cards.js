@@ -1,5 +1,6 @@
 // TODO: Should probably refactor to take a Task object
 import moment from 'moment';
+import {goTo} from "../utilities";
 
 export const formatDateTime = dateTime => {
     if (!dateTime) {
@@ -54,16 +55,18 @@ export const Card = ({
     </div>
 };
 
+
 /**
  * A Card for seasons. We don't have as much data for seasons as we do for Tasks, so this is much slimmer.
  */
-export const SeasonCard = ({title, tasks, onSeasonClick, color, border}) => {
+export const SeasonCard = ({id, title, tasks, onSeasonClick, color, border}) => {
     const taskLength = tasks.length;
-    const description = taskLength + (taskLength === 1 ? ' task' : ' tasks');
+    let description = taskLength + (taskLength === 1 ? ' task' : ' tasks');
 
     return <Card title={title} onClick={taskLength > 0 ? onSeasonClick : null} color={color} border={border}
-                 description={description}/>
+                 description={description} />
 };
+
 
 /**
  * A Card for showing the preview for 1 particular Task. This is one of the most important components in all of
