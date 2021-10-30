@@ -1,13 +1,30 @@
 // TODO: Should probably refactor to take a Task object
 import moment from 'moment';
 
+const formatDateTime = dateTime => {
+    if (!dateTime) {
+        return <span className={'text-gray-500'}>None</span>
+    }
+    return moment(dateTime).format('MMM Do YY');
+};
+
 /**
  * A generic Card component. This has some slots for putting whatever you want in, and can show
  * a large hero section; whether that's an image or just a piece of text.
  *
  * Cards are clickable, but if a card CAN'T be clicked for some reason, we style it differently.
  */
-export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white', border = '', children}) => {
+export const Card = ({
+                         title,
+                         hero,
+                         onClick,
+                         description,
+                         preTitle,
+                         color = 'bg-white',
+                         border = '',
+                         style = {},
+                         children
+                     }) => {
     const classes = onClick ? {
         top: `cursor-pointer hover:shadow-md`,
         card: 'hover:bg-blue-200',
@@ -20,7 +37,9 @@ export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-w
 
     return <div key={title}
                 className={`flex flex-col rounded-lg shadow-lg overflow-hidden ${classes.top} ${border}`}
-                onClick={onClick}>
+                onClick={onClick}
+                style={style}
+    >
         <div className={'flex-shrink-0'}>
             {hero}
         </div>
@@ -39,10 +58,11 @@ export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-w
  * A Card for seasons. We don't have as much data for seasons as we do for Tasks, so this is much slimmer.
  */
 export const SeasonCard = ({title, tasks, onSeasonClick, color, border}) => {
-    const taskLength  = tasks.length;
+    const taskLength = tasks.length;
     const description = taskLength + (taskLength === 1 ? ' task' : ' tasks');
 
-    return <Card title={title} onClick={taskLength > 0 ? onSeasonClick : null} color={color} border={border} description={description} />
+    return <Card title={title} onClick={taskLength > 0 ? onSeasonClick : null} color={color} border={border}
+                 description={description}/>
 };
 
 /**
@@ -63,15 +83,17 @@ export const TaskCard = ({
                          }) => {
     const renderedImage = <img width={256} height={256} className="h-48 w-full object-cover" src={image} alt=""/>;
 
-    const clickableCategory = <ClickableLink name={category} onClick={onCategoryClick}/>
-    const clickableSeason = <ClickableLink name={seasonName} onClick={onSeasonClick} color={'green'}/>
+    let isFuture = false;
+    if (startedAt && moment(startedAt).isAfter(moment())) {
+        isFuture = true;
+    }
 
-    const formatDateTime = dateTime => {
-        if (!dateTime) {
-            return <span className={'text-gray-500'}>None</span>
-        }
-        return moment(dateTime).format('MMM Do YY');
-    };
+    const [categoryClickHandler, seasonClickHandler, taskClickHandler] = !isFuture
+        ? [onCategoryClick, onSeasonClick, onTaskClick]
+        : [null, null, null];
+
+    const clickableCategory = <ClickableLink name={category} onClick={categoryClickHandler}/>
+    const clickableSeason = <ClickableLink name={seasonName} onClick={seasonClickHandler} color={'green'}/>
 
     // If this task has already ended, we want to give it a slight gray look.
     let color = 'bg-white';
@@ -81,8 +103,9 @@ export const TaskCard = ({
 
     return <Card
         title={title}
+        style={isFuture ? {filter: 'blur(10px)', 'user-select': 'none'} : {}}
         hero={renderedImage}
-        onClick={onTaskClick}
+        onClick={taskClickHandler}
         description={description}
         color={color}
         preTitle={clickableCategory}>
