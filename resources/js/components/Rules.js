@@ -1,6 +1,8 @@
 import {WdwFloorIsLavaRules} from "./rules/WdwFloorIsLavaRules";
 import {WfGreenDemonRules} from "./rules/WfGreenDemonRules";
 import {SlSlopeMasterRules} from "./rules/SlSlopeMasterRules";
+import {TtmCalculusRules} from "./rules/TtmCalculusRules";
+import {SslAllBoxesRules} from "./rules/SslAllBoxesRules";
 
 /**
  * The root Rules component. Depending on the slug, this can show any arbitrary rules for your task.
@@ -12,7 +14,9 @@ export const Rules = ({slug}) => {
         ['wdw-floor-is-lava', <WdwFloorIsLavaRules />],
         ['wf-green-demon', <WfGreenDemonRules />],
         ['sl-slope-master', <SlSlopeMasterRules />],
-
+        ['ttm-calculus', <TtmCalculusRules />],
+        ['ssl-all-boxes', <SslAllBoxesRules />],
+        // ['ttc-100-moving', <Ttc100MovingRules />],
     ];
 
     for (const rule of ruleSet) {
