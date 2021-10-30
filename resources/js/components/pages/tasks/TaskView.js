@@ -5,9 +5,24 @@ import {Rules} from "../../Rules";
 import {useEffect, useState} from "react";
 import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
+import {ClickableLink} from "../../Cards";
 
 // TODO: Should probably refactor to take a Task object
-export const TaskView = ({id, title, image, description, category, slug, onCategoryClick}) => {
+export const TaskView = ({
+                             id,
+                             title,
+                             image,
+                             startedAt,
+                             endedAt,
+                             stage,
+                             season,
+                             onStageClick,
+                             onSeasonClick,
+                             description,
+                             category,
+                             slug,
+                             onCategoryClick
+                         }) => {
     const [leaderboard, setLeaderboard] = useState([]);
 
     useEffect(() => {
@@ -15,6 +30,9 @@ export const TaskView = ({id, title, image, description, category, slug, onCateg
             .then(response => response.json())
             .then(data => setLeaderboard(data));
     }, []);
+
+    const clickableSeason = <ClickableLink name={season.name} onClick={onSeasonClick} color={'green'}/>
+    const clickableStage = stage ? <ClickableLink name={stage.name} onClick={onStageClick} color={'red'}/> : null;
 
     return <div className={'p-12'}>
 
@@ -24,11 +42,18 @@ export const TaskView = ({id, title, image, description, category, slug, onCateg
             onClick={onCategoryClick}>
             {category}
         </div>
+        <div className={'text-center'}>
+            {clickableStage}
+        </div>
+        <div className={'text-center'}>
+            {clickableSeason}
+        </div>
         <p className={'text-gray-500 text-base mb-5 text-center'}>{description}</p>
         <div className={'flex flex-row w-full justify-center'}>
             <Leaderboard
                 leaderboardData={leaderboard}
-                leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'} to={`/players/${player.id}`}>{player.name}</Link>}
+                leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'}
+                                                     to={`/players/${player.id}`}>{player.name}</Link>}
             />
         </div>
         <div className={'flex flex-row w-full justify-center mb-5'}>

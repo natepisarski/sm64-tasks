@@ -26,17 +26,25 @@ const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onSt
 </div>);
 
 /** Gets the larger, expanded view of 1 particular task. */
-const getTaskView = (task, setCategoryFilter) => task ?
+const getTaskView = (task, setCategoryFilter, onSeasonClick, onStageClick) => task ?
     <div className={'grid col-span-12'}>
         <TaskView
             key={task.id}
             id={task.id}
             slug={task.slug}
             title={task.name}
+            onSeasonClick={() => onSeasonClick(task.season.id)}
+            onStageClick={() => onStageClick(task.stage)}
+            startedAt={task.started_at}
+            endedAt={task.ended_at}
+            season={task.season}
+            stage={task.stage}
             description={task.description ?? 'No Description'}
             category={task.task_category.name ?? 'No Category'}
             image={task.image}
-            onCategoryClick={() => setCategoryFilter(task.task_category.name)}/>
+            onCategoryClick={() => setCategoryFilter(task.task_category.name)}
+            onSe
+        />
     </div> : null;
 /**
  * This page shows a list of all the active tasks. When you select a task, it will show you an overlay of that task.
@@ -140,7 +148,7 @@ export const TaskIndex = ({}) => {
     const currentTask = tasks.find(task => task.id == currentTaskId);
 
     const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick, onSeasonClick, onStageClick);
-    const taskView = getTaskView(currentTask, onCategoryClick);
+    const taskView = getTaskView(currentTask, onCategoryClick, onSeasonClick, onStageClick);
 
     let currentTaskView = null;
     let currentFilterBar = null;
