@@ -1,5 +1,5 @@
 import {useHistory, useParams} from "react-router";
-import {goTo} from "../utilities";
+import {calculateTaskScore, goTo} from "../utilities";
 import {useEffect, useState} from "react";
 import {SeasonCard} from "./Cards";
 import {SeasonView} from "./SeasonIndex";
@@ -65,7 +65,7 @@ export const PlayerView = ({player}) => {
         <div className={'flex flex-row w-full justify-center my-5'}>
             <div className={'flex flex-col'}>
                 <div className={'flex flex-row justify-center font-semibold'}>
-                    TaskScore: <span className={'font-bold text-blue-500 ml-2'}>5</span>
+                    TaskScore: <span className={'font-bold text-blue-500 ml-2'}>{calculateTaskScore(player.tasks)}</span>
                 </div>
                 <Leaderboard
                     leaderboardData={player.tasks}
