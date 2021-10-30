@@ -129,8 +129,8 @@ export const TaskCard = ({
     </Card>
 };
 
-export const ClickableLink = ({name, onClick, color = 'purple'}) => <div
-    className="text-sm font-medium text-indigo-600">
+export const ClickableLink = ({name, onClick, color = 'purple', size = 'text-sm'}) => <div
+    className={`${size} font-medium text-indigo-600`}>
     <div className={`text-${color}-500 hover:underline`} onClick={evt => {
         evt.stopPropagation();
         onClick();

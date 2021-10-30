@@ -32,9 +32,9 @@ export const TaskView = ({
     }, []);
 
     const clickableSeason = <ClickableLink name={season.name} onClick={onSeasonClick} color={'green'}/>
-    const clickableStage = stage ? <ClickableLink name={stage.name} onClick={onStageClick} color={'red'}/> : null;
+    const clickableStage = stage ? <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} size={'text-lg'}/> : null;
 
-    return <div className={'p-12'}>
+    return <div className={'md:p-12'}>
 
         <div className={'text-4xl font-semibold text-center'}>{title}</div>
         <div
@@ -42,11 +42,15 @@ export const TaskView = ({
             onClick={onCategoryClick}>
             {category}
         </div>
-        <div className={'text-center'}>
-            {clickableStage}
+        <div className={'flex flex-row justify-center'}>
+            <div className={'cursor-pointer'}>
+                {clickableStage}
+            </div>
         </div>
-        <div className={'text-center'}>
-            {clickableSeason}
+        <div className={'flex flex-row justify-center'}>
+            <div className={'cursor-pointer'}>
+                {clickableSeason}
+            </div>
         </div>
         <p className={'text-gray-500 text-base mb-5 text-center'}>{description}</p>
         <div className={'flex flex-row w-full justify-center'}>
