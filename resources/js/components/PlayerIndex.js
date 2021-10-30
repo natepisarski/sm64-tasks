@@ -3,6 +3,8 @@ import {goTo} from "../utilities";
 import {useEffect, useState} from "react";
 import {SeasonCard} from "./Cards";
 import {SeasonView} from "./SeasonIndex";
+import {Leaderboard} from "./Leaderboard";
+import {Link} from "react-router-dom";
 
 /**
  * This is the component that shows 1 single player, either in the grid or in the focused mode.
@@ -14,6 +16,9 @@ export const PlayerBubble = ({player, onClick}) => {
         bubbleClass += 'hover:shadow-lg hover:bg-blue-100';
     }
 
+    const taskLength = player.tasks.length;
+    const nameSubtitle = taskLength + (taskLength === 1 ? ' task' : ' tasks');
+
     return <li key={player.id}>
         <div className={bubbleClass} onClick={onClick}>
             <img className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
@@ -22,6 +27,7 @@ export const PlayerBubble = ({player, onClick}) => {
             <div className="space-y-2">
                 <div className="text-xs font-medium lg:text-sm">
                     <h3>{player.name}</h3>
+                    <span className={'text-sm text-gray-600'}>{nameSubtitle}</span>
                 </div>
             </div>
         </div>
@@ -46,9 +52,25 @@ export const PlayerGrid = ({players, onPlayerClick}) => {
  * @constructor
  */
 export const PlayerView = ({player}) => {
+    // 'player' comes with a structure called 'tasks', which has this form:
+    /*
+        "tasks": [
+          {id: x, name: "SSL: All Boxes",  pivot: {"score": 4}}
+        ]
+
+        We can use this to make a Leaderboard, with Tasks on the left and Score on the right.
+     */
     return <div className={'list-none mb-6'}>
         <PlayerBubble player={player}/>
-        <div>Leaderboard would go here</div>
+        <div className={'flex flex-row w-full justify-center my-5'}>
+            <Leaderboard
+                leaderboardData={player.tasks}
+                leftColumnAccessor={task => task}
+                leftColumnName={'Task'}
+                leftColumnFormatter={task => <Link className={'text-purple-500 hover:underline'} to={`/tasks/${task.id}`}>{task.name}</Link>}
+                scoreAccessor={task => task.pivot.score}
+            />
+        </div>
     </div>
 };
 
@@ -105,7 +127,7 @@ export const PlayerIndex = () => {
     console.debug('Current Player with this ID: ', currentPlayer);
     // Zooms in on one particular player. This will show their avatar larger, and a leaderboard for all tasks that they've
     // participated in. In the future this will also show their TaskScore.
-    const currentPlayerView = currentPlayer ? <PlayerView player={currentPlayer} /> : null;
+    const currentPlayerView = currentPlayer ? <PlayerView player={currentPlayer}/> : null;
     const playerGridView = <PlayerGrid players={players} onPlayerClick={onPlayerClick}/>;
 
     const gridTitle = currentPlayer ? currentPlayer.name : 'Players';

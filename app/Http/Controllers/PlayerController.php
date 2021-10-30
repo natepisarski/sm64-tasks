@@ -16,6 +16,6 @@ class PlayerController extends Controller
 {
     public function index(Request $request)
     {
-        return Player::all();
+        return Player::with('tasks')->get();
     }
 }
