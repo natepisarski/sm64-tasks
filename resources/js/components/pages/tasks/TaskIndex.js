@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useHistory, useLocation, useParams} from "react-router";
-import {TaskCard} from "./Cards";
+import {TaskCard} from "../../Cards";
 import {TaskView} from "./TaskView";
 import * as queryString from 'query-string';
 import {Filters} from "./Filters";

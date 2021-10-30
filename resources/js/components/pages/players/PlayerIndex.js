@@ -1,9 +1,9 @@
 import {useHistory, useParams} from "react-router";
-import {calculateTaskScore, goTo} from "../utilities";
+import {calculateTaskScore, goTo} from "../../../utilities";
 import {useEffect, useState} from "react";
-import {SeasonCard} from "./Cards";
-import {SeasonView} from "./SeasonIndex";
-import {Leaderboard} from "./Leaderboard";
+import {SeasonCard} from "../../Cards";
+import {SeasonView} from "../seasons/SeasonIndex";
+import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
 
 /**

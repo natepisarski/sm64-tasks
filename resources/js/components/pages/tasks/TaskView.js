@@ -1,9 +1,9 @@
 /**
  * This is the component that shows you 1 particular task.
  */
-import {Rules} from "./Rules";
+import {Rules} from "../../Rules";
 import {useEffect, useState} from "react";
-import {Leaderboard} from "./Leaderboard";
+import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
 
 // TODO: Should probably refactor to take a Task object

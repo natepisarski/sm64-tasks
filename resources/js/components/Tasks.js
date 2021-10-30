@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {TaskIndex} from "./TaskIndex";
-import {SiteHeader} from "./SiteHeader";
+import {TaskIndex} from "./pages/tasks/TaskIndex";
+import {SiteHeader} from "./pages/website/SiteHeader";
 import {Redirect} from "react-router";
-import {SeasonIndex} from "./SeasonIndex";
-import {PlayerIndex} from "./PlayerIndex";
+import {SeasonIndex} from "./pages/seasons/SeasonIndex";
+import {PlayerIndex} from "./pages/players/PlayerIndex";
 
 /**
  * This is the EntryPoint for the React app. From here we just set up the router. The individual pages each control
