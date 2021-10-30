@@ -9,7 +9,7 @@ import {SeasonView} from "./SeasonIndex";
  */
 export const PlayerBubble = ({player}) => {
     return <li>
-        <div className="space-y-4">
+        <div className="space-y-4 cursor-pointer rounded-lg hover:shadow-lg hover:bg-blue-100">
             <img className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
                  src={player.avatar}
                  alt={player.name}/>
@@ -103,7 +103,7 @@ export const PlayerIndex = () => {
     const gridTitle = currentPlayer ? currentPlayer.name : 'Players';
     const gridSubtitle = currentPlayer ? null : <p className="text-xl text-gray-500">See who's participating in the tasks.</p>
 
-    return <div className="bg-white">
+    return <div>
         <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24">
             <div className="space-y-8 sm:space-y-12">
                 <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
