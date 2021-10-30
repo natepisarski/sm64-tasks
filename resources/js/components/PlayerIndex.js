@@ -7,9 +7,9 @@ import {SeasonView} from "./SeasonIndex";
 /**
  * This is the component that shows 1 single player, either in the grid or in the focused mode.
  */
-export const PlayerBubble = ({player}) => {
-    return <li>
-        <div className="space-y-4 cursor-pointer rounded-lg hover:shadow-lg hover:bg-blue-100">
+export const PlayerBubble = ({player, onClick}) => {
+    return <li key={player.id}>
+        <div className="space-y-4 cursor-pointer rounded-lg hover:shadow-lg hover:bg-blue-100" onClick={onClick}>
             <img className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
                  src={player.avatar}
                  alt={player.name}/>
@@ -26,10 +26,10 @@ export const PlayerBubble = ({player}) => {
  * The PlayerGrid is a component that shows the players in a series
  * @constructor
  */
-export const PlayerGrid = ({players}) => {
+export const PlayerGrid = ({players, onPlayerClick}) => {
     return <ul role="list"
                className="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6">
-        {players.map(player => <PlayerBubble player={player} />)}
+        {players.map(player => <PlayerBubble key={player.id} player={player} onClick={onPlayerClick(player)} />)}
     </ul>
 };
 
@@ -77,10 +77,10 @@ export const PlayerIndex = () => {
 
     // When you click on a player, it sets the current player and changes the URL. This also affects what is shown on
     // the page.
-    const onSeasonClick = (player) => () => {
+    const onPlayerClick = (player) => () => {
         console.debug('Triggering player click: ', player);
         setPlayerId(player.id);
-        history.push(`/seasons/${player.id}`);
+        history.push(`/players/${player.id}`);
     };
 
     // This triggers when the player changes in the URL, or from a click. We use this to set the current player
@@ -93,11 +93,12 @@ export const PlayerIndex = () => {
 
     // We only have the ID of the current player. We need the object.
     const currentPlayer = players.find(player => player.id == currentPlayerId);
-
-    // Zooms in on one particular season. It will show the leaderboard for that season and let you view the tasks.
+    console.debug('Current Player with this ID: ', currentPlayer);
+    // Zooms in on one particular player. This will show their avatar larger, and a leaderboard for all tasks that they've
+    // participated in. In the future this will also show their TaskScore.
     const appropriatePlayerView = currentPlayer ?
-        <PlayerView plyer={currentPlayer} />
-        : <PlayerGrid players={players} />;
+        <PlayerView player={currentPlayer} />
+        : <PlayerGrid players={players} onPlayerClick={onPlayerClick}/>;
 
 
     const gridTitle = currentPlayer ? currentPlayer.name : 'Players';
@@ -108,7 +109,7 @@ export const PlayerIndex = () => {
             <div className="space-y-8 sm:space-y-12">
                 <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
                     <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{gridTitle}</h2>
-                    <p className="text-xl text-gray-500">{gridSubtitle}</p>
+                    <span className="text-xl text-gray-500">{gridSubtitle}</span>
                 </div>
                 {appropriatePlayerView}
             </div>
