@@ -4,6 +4,7 @@
 import {Rules} from "./Rules";
 import {useEffect, useState} from "react";
 import {Leaderboard} from "./Leaderboard";
+import {Link} from "react-router-dom";
 
 // TODO: Should probably refactor to take a Task object
 export const TaskView = ({id, title, image, description, category, slug, onCategoryClick}) => {
@@ -25,7 +26,10 @@ export const TaskView = ({id, title, image, description, category, slug, onCateg
         </div>
         <p className={'text-gray-500 text-base mb-5 text-center'}>{description}</p>
         <div className={'flex flex-row w-full justify-center'}>
-            <Leaderboard leaderboardData={leaderboard}/>
+            <Leaderboard
+                leaderboardData={leaderboard}
+                leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'} to={`/players/${player.id}`}>{player.name}</Link>}
+            />
         </div>
         <div className={'flex flex-row w-full justify-center mb-5'}>
             <img src={image}/>

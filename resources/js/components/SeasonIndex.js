@@ -6,6 +6,7 @@ import {useHistory, useParams} from "react-router";
 import {getRandomItemFromArray, goTo} from "../utilities";
 import {Leaderboard} from "./Leaderboard";
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 /**
  * Root view for the seasons. This will display a list of all the seasons, and potentially a leaderboard for a season
@@ -94,7 +95,10 @@ export const SeasonIndex = ({}) => {
 export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
     return <div className={'grid col-span-12 justify-center'}>
         <div className={'text-4xl font-semibold text-center mb-2'}>{season.name}</div>
-        <Leaderboard leaderboardData={leaderboard}/>
+        <Leaderboard
+            leaderboardData={leaderboard}
+            leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'} to={`/players/${player.id}`}>{player.name}</Link>}
+        />
         <div className={'flex justify-center'}>
             <button
                 type="button"
