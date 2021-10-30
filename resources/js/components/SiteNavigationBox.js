@@ -1,5 +1,5 @@
 export const SiteNavigationBox = ({ title, icon, description, color, onclick }) => {
-    return <li key={title} className="sm:col-span-6 md:col-span-12 sm:gap-x-2 flex shadow-sm rounded-md cursor-pointer max-h-12" onClick={onclick}>
+    return <li key={title} className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 md:max-w-xs flex shadow-sm rounded-md cursor-pointer max-h-12" onClick={onclick}>
         <div
             className={`flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md ${color}`}
         >

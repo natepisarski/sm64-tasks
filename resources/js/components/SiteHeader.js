@@ -25,9 +25,10 @@ export const SiteHeader = ({}) => {
                 </p>
             </div>
         </div>
-        <div className={'w-full flex flex-row justify-between mb-6 mx-3'}>
+        <div className={'grid grid-cols-12 space-between'}>
             <SiteNavigationBox title={'Tasks'} color={'bg-blue-400'} icon={'TASK'} description={'View tasks and rules.'} onclick={goToUrl('/tasks')} />
             <SiteNavigationBox title={'Seasons'} color={'bg-purple-400'} icon={'SEASON'} description={'View a list of all seasons'} onclick={goToUrl('/seasons')} />
+            <SiteNavigationBox title={'Players'} color={'bg-yellow-400'} icon={'PLAYER'} description={'View the competing players'} onclick={goToUrl('/players')} />
             {/*<SiteNavigationBox title={'Seasons'} color={'bg-gray-400'} icon={'LB'} description={'Size up the competition'} onclick={goToUrl('/leaderboard')} />*/}
             {/*<SiteNavigationBox title={'Leaderboards'} color={'bg-yellow-400'} icon={'CM'} description={`See who's competing, and their history.`} onclick={goToUrl('/players')} />*/}
             {/*<SiteNavigationBox title={'Learn'} color={'bg-purple-400'} icon={'LN'} description={'FAQ, Learn More, etc.'} onclick={goTo('/learn')} />*/}
