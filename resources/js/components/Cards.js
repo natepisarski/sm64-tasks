@@ -96,7 +96,7 @@ export const TaskCard = ({
 
     const clickableCategory = <ClickableLink name={category} onClick={categoryClickHandler}/>
     const clickableSeason = <ClickableLink name={seasonName} onClick={seasonClickHandler} color={'green'}/>
-    const clickableStage = <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} />
+    const clickableStage = stage ? <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} /> : null;
 
     // If this task has already ended, we want to give it a slight gray look.
     let color = 'bg-white';
