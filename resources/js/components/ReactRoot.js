@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Tasks} from "./Tasks";
 
-function Example() {
+function ReactRoot() {
     return (
         <div className="w-full">
             <Tasks />
@@ -10,10 +10,10 @@ function Example() {
     );
 }
 
-export default Example;
+export default ReactRoot;
 
 setTimeout( () => {
     if (document.getElementById('react-root')) {
-        ReactDOM.render(<Example/>, document.getElementById('react-root'));
+        ReactDOM.render(<ReactRoot/>, document.getElementById('react-root'));
     }
 }, 0);
