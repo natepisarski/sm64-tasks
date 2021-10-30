@@ -5,7 +5,7 @@ import {Rules} from "../../Rules";
 import {useEffect, useState} from "react";
 import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
-import {ClickableLink} from "../../Cards";
+import {ClickableLink, formatDateTime} from "../../Cards";
 
 // TODO: Should probably refactor to take a Task object
 export const TaskView = ({
@@ -37,6 +37,9 @@ export const TaskView = ({
     return <div className={'md:p-12'}>
 
         <div className={'text-4xl font-semibold text-center'}>{title}</div>
+        <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700 text-center justify-center'}>
+            {formatDateTime(startedAt)} - {formatDateTime(endedAt)}
+        </div>
         <div
             className={'text-purple-500 text-sm font-medium hover:underline mb-4 text-center cursor-pointer'}
             onClick={onCategoryClick}>

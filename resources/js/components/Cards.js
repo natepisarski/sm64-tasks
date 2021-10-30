@@ -1,7 +1,7 @@
 // TODO: Should probably refactor to take a Task object
 import moment from 'moment';
 
-const formatDateTime = dateTime => {
+export const formatDateTime = dateTime => {
     if (!dateTime) {
         return <span className={'text-gray-500'}>None</span>
     }
