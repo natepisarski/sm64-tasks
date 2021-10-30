@@ -64,14 +64,16 @@ export const SeasonIndex = ({}) => {
     const pastSeasons = seasons.filter(season => season.ended_at !== null);
 
     const getSeasons = (theSeasons) => theSeasons.map(season => {
-        return <SeasonCard
-            key={season.id}
-            title={season.name}
-            tasks={season.tasks}
-            onSeasonClick={onSeasonClick(season)}
-            color={season.ended_at === null ? 'bg-white' : 'bg-gray-200'}
-            border={season.ended_at === null ? 'border-2 border-red-200 hover:border-4' : 'border-2 border-gray-100'}
-        />
+        return <div key={season.id} className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
+            <SeasonCard
+                key={season.id}
+                title={season.name}
+                tasks={season.tasks}
+                onSeasonClick={onSeasonClick(season)}
+                color={season.ended_at === null ? 'bg-white' : 'bg-gray-200'}
+                border={season.ended_at === null ? 'border-2 border-red-200 hover:border-4' : 'border-2 border-gray-100'}
+            />
+        </div>
     });
 
     const currentSeasonComponents = getSeasons(currentSeasons);
@@ -98,7 +100,8 @@ export const SeasonView = ({season, leaderboard, onSeasonClick}) => {
         <div className={'text-4xl font-semibold text-center mb-2'}>{season.name}</div>
         <Leaderboard
             leaderboardData={leaderboard}
-            leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'} to={`/players/${player.id}`}>{player.name}</Link>}
+            leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'}
+                                                 to={`/players/${player.id}`}>{player.name}</Link>}
         />
         <div className={'flex justify-center'}>
             <button
