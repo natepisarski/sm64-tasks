@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
-    protected $with = ['taskCategory', 'season'];
+    protected $with = ['taskCategory', 'season', 'stage'];
 
     public function taskCategory()
     {
@@ -23,6 +23,11 @@ class Task extends Model
     public function season()
     {
         return $this->belongsTo(Season::class);
+    }
+
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
     }
 
     public function players()
