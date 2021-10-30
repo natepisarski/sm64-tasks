@@ -8,8 +8,14 @@ import {SeasonView} from "./SeasonIndex";
  * This is the component that shows 1 single player, either in the grid or in the focused mode.
  */
 export const PlayerBubble = ({player, onClick}) => {
+    let bubbleClass = 'space-y-4 cursor-pointer rounded-lg ';
+
+    if (onClick) {
+        bubbleClass += 'hover:shadow-lg hover:bg-blue-100';
+    }
+
     return <li key={player.id}>
-        <div className="space-y-4 cursor-pointer rounded-lg hover:shadow-lg hover:bg-blue-100" onClick={onClick}>
+        <div className={bubbleClass} onClick={onClick}>
             <img className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
                  src={player.avatar}
                  alt={player.name}/>
@@ -29,7 +35,7 @@ export const PlayerBubble = ({player, onClick}) => {
 export const PlayerGrid = ({players, onPlayerClick}) => {
     return <ul role="list"
                className="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6">
-        {players.map(player => <PlayerBubble key={player.id} player={player} onClick={onPlayerClick(player)} />)}
+        {players.map(player => <PlayerBubble key={player.id} player={player} onClick={onPlayerClick(player)}/>)}
     </ul>
 };
 
@@ -40,7 +46,10 @@ export const PlayerGrid = ({players, onPlayerClick}) => {
  * @constructor
  */
 export const PlayerView = ({player}) => {
-    return <div>Viewing {player.name}</div>
+    return <div className={'list-none mb-6'}>
+        <PlayerBubble player={player}/>
+        <div>Leaderboard would go here</div>
+    </div>
 };
 
 /**
@@ -96,13 +105,12 @@ export const PlayerIndex = () => {
     console.debug('Current Player with this ID: ', currentPlayer);
     // Zooms in on one particular player. This will show their avatar larger, and a leaderboard for all tasks that they've
     // participated in. In the future this will also show their TaskScore.
-    const appropriatePlayerView = currentPlayer ?
-        <PlayerView player={currentPlayer} />
-        : <PlayerGrid players={players} onPlayerClick={onPlayerClick}/>;
-
+    const currentPlayerView = currentPlayer ? <PlayerView player={currentPlayer} /> : null;
+    const playerGridView = <PlayerGrid players={players} onPlayerClick={onPlayerClick}/>;
 
     const gridTitle = currentPlayer ? currentPlayer.name : 'Players';
-    const gridSubtitle = currentPlayer ? null : <p className="text-xl text-gray-500">See who's participating in the tasks.</p>
+    const gridSubtitle = currentPlayer ? null :
+        <p className="text-xl text-gray-500">See who's participating in the tasks.</p>
 
     return <div>
         <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24">
@@ -111,7 +119,8 @@ export const PlayerIndex = () => {
                     <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{gridTitle}</h2>
                     <span className="text-xl text-gray-500">{gridSubtitle}</span>
                 </div>
-                {appropriatePlayerView}
+                {currentPlayerView}
+                {playerGridView}
             </div>
         </div>
     </div>;
