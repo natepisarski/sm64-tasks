@@ -32,7 +32,7 @@ export const Leaderboard = ({
 
     // The formatter for what appears in the LEFT hand column
 
-    return <table className={'text-2xl text-gray-600 mb-6'} style={{width: '25vw'}}>
+    return <table className={'text-2xl text-gray-600 mb-6'}>
         <thead className={'bg-gray-700 text-white rounded-sm'}>
         <tr>
             <th className={'text-center p-3'}>{leftColumnName}</th>

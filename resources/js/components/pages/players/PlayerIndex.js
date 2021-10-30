@@ -63,7 +63,7 @@ export const PlayerView = ({player}) => {
     return <div className={'list-none mb-6'}>
         <PlayerBubble player={player}/>
         <div className={'flex flex-row w-full justify-center my-5'}>
-            <div className={'flex flex-col'}>
+            <div className={'flex flex-col w-full'}>
                 <div className={'flex flex-row justify-center font-semibold'}>
                     TaskScore: <span className={'font-bold text-blue-500 ml-2'}>{calculateTaskScore(player.tasks)}</span>
                 </div>
@@ -117,6 +117,7 @@ export const PlayerIndex = () => {
     const onPlayerClick = (player) => () => {
         console.debug('Triggering player click: ', player);
         setPlayerId(player.id);
+        window.scrollTo(0, 250);
         history.push(`/players/${player.id}`);
     };
 
