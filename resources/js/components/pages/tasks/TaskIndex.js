@@ -6,13 +6,16 @@ import * as queryString from 'query-string';
 import {Filters} from "./Filters";
 
 /** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
-const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick) => tasks.map(task => <div key={task.id}
-                                                                                       className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
+const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onStageClick) => tasks.map(task => <div
+    key={task.id}
+    className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
     <TaskCard
         category={task.task_category?.name ?? 'No Category'}
         title={task.name}
         description={task.description ?? 'No Description'}
         image={task.image}
+        stage={task.stage}
+        onStageClick={() => onStageClick(task.stage)}
         onTaskClick={onTaskClick(task)}
         onCategoryClick={() => setCategoryFilter(task.task_category?.name)}
         seasonName={task.season?.name}
@@ -46,15 +49,17 @@ export const TaskIndex = ({}) => {
     let history = useHistory();
 
     // These are all the queryString parameters we can have.
-    const {category = null, seasonId = null} = queryString.parse(location.search);
+    const {category = null, seasonId = null, stage = null} = queryString.parse(location.search);
 
     let [tasks, setTasks] = useState([]);
     let [categoryFilter, setCategoryFilter] = useState(category);
     let [seasonFilter, setSeasonFilter] = useState(seasonId);
+    let [stageFilter, setStageFilter] = useState(stage);
 
     useEffect(() => {
         setCategoryFilter(category);
         setSeasonFilter(seasonId);
+        setStageFilter(stage)
     }, [location]);
 
     const [currentTaskId, setTaskId] = useState(taskId);
@@ -112,15 +117,29 @@ export const TaskIndex = ({}) => {
         onTaskClick(null);
     };
 
+    const onStageClick = (stage) => {
+        if (!stage) {
+            history.push('/tasks');
+            setStageFilter(null);
+            return null;
+        }
+
+        history.push(`/tasks?stage=${stage.slug}`);
+        setStageFilter(stage.slug);
+        onTaskClick(null); // If it's clicked from the zoomed-in view this brings us back.
+    }
+
     // TODO: Can be combined to be more efficient but meh. Readability trumps everything else.
     console.debug('About to filter: ', tasks);
     const filteredTasks = tasks
         .filter(task => !categoryFilter || task.task_category.name == categoryFilter)
-        .filter(task => !seasonFilter || task.season_id == seasonId);
+        .filter(task => !seasonFilter || task.season_id == seasonId)
+        .filter(task => !stageFilter || task.stage.slug == stageFilter)
+    ;
 
     const currentTask = tasks.find(task => task.id == currentTaskId);
 
-    const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick, onSeasonClick);
+    const taskCards = getTaskCards(filteredTasks, onCategoryClick, onTaskClick, onSeasonClick, onStageClick);
     const taskView = getTaskView(currentTask, onCategoryClick);
 
     let currentTaskView = null;
@@ -133,6 +152,7 @@ export const TaskIndex = ({}) => {
         currentFilterBar = <Filters tuples={[
             ['Category', categoryFilter, () => onCategoryClick(null)],
             ['Season', seasonFilter, () => onSeasonClick(null)],
+            ['Stage', stageFilter, () => onStageClick(null)],
         ]}/>
     }
 

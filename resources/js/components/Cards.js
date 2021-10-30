@@ -74,12 +74,14 @@ export const TaskCard = ({
                              image,
                              description,
                              category,
+                             stage,
                              startedAt,
                              endedAt,
                              seasonName,
                              onCategoryClick,
                              onTaskClick,
-                             onSeasonClick
+                             onSeasonClick,
+                             onStageClick,
                          }) => {
     const renderedImage = <img width={256} height={256} className="h-48 w-full object-cover" src={image} alt=""/>;
 
@@ -88,12 +90,13 @@ export const TaskCard = ({
         isFuture = true;
     }
 
-    const [categoryClickHandler, seasonClickHandler, taskClickHandler] = !isFuture
-        ? [onCategoryClick, onSeasonClick, onTaskClick]
-        : [null, null, null];
+    const [categoryClickHandler, seasonClickHandler, taskClickHandler, stageClickHandler] = !isFuture
+        ? [onCategoryClick, onSeasonClick, onTaskClick, onStageClick]
+        : [null, null, null, null];
 
     const clickableCategory = <ClickableLink name={category} onClick={categoryClickHandler}/>
     const clickableSeason = <ClickableLink name={seasonName} onClick={seasonClickHandler} color={'green'}/>
+    const clickableStage = <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} />
 
     // If this task has already ended, we want to give it a slight gray look.
     let color = 'bg-white';
@@ -103,7 +106,7 @@ export const TaskCard = ({
 
     return <Card
         title={title}
-        style={isFuture ? {filter: 'blur(10px)', 'user-select': 'none'} : {}}
+        style={isFuture ? {filter: 'blur(10px)', userSelect: 'none'} : {}}
         hero={renderedImage}
         onClick={taskClickHandler}
         description={description}
@@ -118,6 +121,9 @@ export const TaskCard = ({
                 <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700'}>
                     {formatDateTime(startedAt)} - {formatDateTime(endedAt)}
                 </div>
+            </div>
+            <div className={'flex flex-row'}>
+                {clickableStage}
             </div>
         </div>
     </Card>
