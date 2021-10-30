@@ -4,19 +4,31 @@ import moment from 'moment';
 /**
  * A generic Card component. This has some slots for putting whatever you want in, and can show
  * a large hero section; whether that's an image or just a piece of text.
+ *
+ * Cards are clickable, but if a card CAN'T be clicked for some reason, we style it differently.
  */
 export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-white', border = '', children}) => {
+    const classes = onClick ? {
+        top: `cursor-pointer hover:shadow-md`,
+        card: 'hover:bg-blue-200',
+        text: 'hover:text-blue-600 hover:underline'
+    } : {
+        top: '',
+        card: '',
+        text: ''
+    };
+
     return <div key={title}
-                className={`flex flex-col rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-md ${border}`}
+                className={`flex flex-col rounded-lg shadow-lg overflow-hidden ${classes.top} ${border}`}
                 onClick={onClick}>
         <div className={'flex-shrink-0'}>
             {hero}
         </div>
-        <div className={`flex-1 ${color} p-6 flex flex-col justify-between hover:bg-blue-200`}>
+        <div className={`flex-1 ${color} p-6 flex flex-col justify-between ${classes.card}`}>
             {preTitle}
             {children}
             <div onClick={onClick} className="block mt-2">
-                <p className="text-xl font-semibold text-gray-900 hover:text-blue-600 hover:underline">{title}</p>
+                <p className={`text-xl font-semibold text-gray-900 ${classes.text}`}>{title}</p>
                 {description}
             </div>
         </div>
@@ -26,8 +38,11 @@ export const Card = ({title, hero, onClick, description, preTitle, color = 'bg-w
 /**
  * A Card for seasons. We don't have as much data for seasons as we do for Tasks, so this is much slimmer.
  */
-export const SeasonCard = ({title, onSeasonClick, color, border}) => {
-    return <Card title={title} onClick={onSeasonClick} color={color} border={border}/>
+export const SeasonCard = ({title, tasks, onSeasonClick, color, border}) => {
+    const taskLength  = tasks.length;
+    const description = taskLength + (taskLength === 1 ? ' task' : ' tasks');
+
+    return <Card title={title} onClick={taskLength > 0 ? onSeasonClick : null} color={color} border={border} description={description} />
 };
 
 /**
