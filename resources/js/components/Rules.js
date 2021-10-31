@@ -17,7 +17,7 @@ export const Rules = ({slug}) => {
         ['sl-slope-master', <SlSlopeMasterRules />],
         ['ttm-calculus', <TtmCalculusRules />],
         ['ssl-all-boxes', <SslAllBoxesRules />],
-        ['ttc-100-moving', <Ttc100MovingRules />],
+        ['ttc-break-all-boxes', <Ttc100MovingRules />],
     ];
 
     for (const rule of ruleSet) {
