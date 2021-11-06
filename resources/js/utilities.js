@@ -41,4 +41,7 @@ export const calculateTaskScore = (tasks, getScoreFromTask = task => task.pivot.
     let sumOfTaskScores = tasks.reduce( (col, it) => col + getScoreFromTask(it), 0);
     let averageScore = sumOfTaskScores / tasks.length;
     return averageScore - tasks.length;
-}
+};
+
+/** Do absolutely nothing; makes a good Placeholder function. */
+export const unit = () => {};

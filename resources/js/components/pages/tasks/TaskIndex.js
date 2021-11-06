@@ -4,39 +4,8 @@ import {TaskCard} from "../../Cards";
 import {TaskView} from "./TaskView";
 import * as queryString from 'query-string';
 import {Filters} from "./Filters";
+import {unit} from "../../../utilities";
 
-/** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
-const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onStageClick) => tasks.map(task => <div
-    key={task.id}
-    className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
-    <TaskCard
-        category={task.task_category?.name ?? 'No Category'}
-        title={task.name}
-        description={task.description ?? 'No Description'}
-        image={task.image}
-        stage={task.stage}
-        onStageClick={() => onStageClick(task.stage)}
-        onTaskClick={onTaskClick(task)}
-        onCategoryClick={() => setCategoryFilter(task.task_category?.name)}
-        seasonName={task.season?.name}
-        onSeasonClick={() => onSeasonClick(task.season.id)}
-        startedAt={task.started_at}
-        endedAt={task.ended_at}
-    />
-</div>);
-
-/** Gets the larger, expanded view of 1 particular task. */
-const getTaskView = (task, setCategoryFilter, onSeasonClick, onStageClick) => task ?
-    <div className={'grid col-span-12'}>
-        <TaskView
-            // Comes from task: id, slug, name, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
-            key={task.id}
-            task={task}
-            onSeasonClick={() => onSeasonClick(task.season.id)}
-            onStageClick={() => onStageClick(task.stage)}
-            onCategoryClick={() => setCategoryFilter(task.task_category.name)}
-        />
-    </div> : null;
 /**
  * This page shows a list of all the active tasks. When you select a task, it will show you an overlay of that task.
  * @returns {JSX.Element}
@@ -75,58 +44,45 @@ export const TaskIndex = ({}) => {
         setTaskId(taskId);
     }, [taskId]);
 
-    // Focuses a new task, showing more details about that one. This can also clear the active task.
-    const onTaskClick = (task) => () => {
-        if (!task) {
-            history.push('/tasks');
-            setTaskId(null);
-            return;
-        }
 
-        history.push(`/tasks/${task.id}`);
-        setTaskId(task.id);
-    };
+    let onTaskClick = unit;
 
-    // Sets a category filter; this will only show certain categories.
-    const onCategoryClick = (category) => {
-        if (!category) {
-            history.push('/tasks');
-            setCategoryFilter(null);
+    // This is a builder for the "filterable" logic. You will pass it some data, and it will then allow an item to be filtered.
+    const onFilterableObjectClick = (filterSetter, queryStringGenerator, reset = true) => filterableObject => {
+        if (!filterableObject) {
+            history.push('/tasks'); // Since the filter is gone, we just want to look at all tasks.
+            filterSetter(null);
             return null;
         }
 
-        history.push(`/tasks?category=${category}`);
-        setCategoryFilter(category);
-
-        // It wouldn't make any sense to filter categories when looking at 1 task, so we clear the selection.
-        onTaskClick(null);
-    };
-
-    // Sets the filter for the desired season. Only tasks from that season will show up.
-    const onSeasonClick = (season) => {
-        if (!season) {
-            history.push('/tasks');
-            setSeasonFilter(null);
-            return null;
+        if (reset) {
+            onTaskClick(null);
         }
+        
+        console.debug('About to filter based on ', filterableObject);
+        history.push(queryStringGenerator(filterableObject));
+        console.debug('Should have made the URL: ', queryStringGenerator(filterableObject));
 
-        history.push(`/tasks?seasonId=${season}`);
-        setSeasonFilter(season);
-        console.debug('Just set season filter: ', season);
-        onTaskClick(null);
-    };
-
-    const onStageClick = (stage) => {
-        if (!stage) {
-            history.push('/tasks');
-            setStageFilter(null);
-            return null;
-        }
-
-        history.push(`/tasks?stage=${stage.slug}`);
-        setStageFilter(stage.slug);
-        onTaskClick(null); // If it's clicked from the zoomed-in view this brings us back.
+        filterSetter(filterableObject);
     }
+
+    onTaskClick = onFilterableObjectClick(
+        setTaskId,
+        task => `/tasks/${task.id}`,
+        false
+    );
+    const onCategoryClick = onFilterableObjectClick(
+        setCategoryFilter,
+        category => `/tasks?category=${category}`
+    );
+    const onSeasonClick = onFilterableObjectClick(
+        setSeasonFilter,
+        season => `/tasks?seasonId=${season}`
+    );
+    const onStageClick = onFilterableObjectClick(
+        stage => setStageFilter((stage?.slug)),
+        stage => `/tasks?stage=${stage.slug}`
+    )
 
     // TODO: Can be combined to be more efficient but meh. Readability trumps everything else.
     console.debug('About to filter: ', tasks);
@@ -162,3 +118,36 @@ export const TaskIndex = ({}) => {
         {currentTaskView}
     </div>
 }
+
+/** Given a set of tasks, generate the birds-eye-view card for them. Will generate a container that takes up variable space on mobile vs desktop. */
+const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onStageClick) => tasks.map(task => <div
+    key={task.id}
+    className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
+    <TaskCard
+        category={task.task_category?.name ?? 'No Category'}
+        title={task.name}
+        description={task.description ?? 'No Description'}
+        image={task.image}
+        stage={task.stage}
+        onStageClick={() => onStageClick(task.stage)}
+        onTaskClick={() => onTaskClick(task)}
+        onCategoryClick={() => setCategoryFilter(task.task_category?.name)}
+        seasonName={task.season?.name}
+        onSeasonClick={() => onSeasonClick(task.season.id)}
+        startedAt={task.started_at}
+        endedAt={task.ended_at}
+    />
+</div>);
+
+/** Gets the larger, expanded view of 1 particular task. */
+const getTaskView = (task, setCategoryFilter, onSeasonClick, onStageClick) => task ?
+    <div className={'grid col-span-12'}>
+        <TaskView
+            // Comes from task: id, slug, name, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
+            key={task.id}
+            task={task}
+            onSeasonClick={() => onSeasonClick(task.season.id)}
+            onStageClick={() => onStageClick(task.stage)}
+            onCategoryClick={() => setCategoryFilter(task.task_category.name)}
+        />
+    </div> : null;
