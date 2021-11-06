@@ -29,21 +29,12 @@ const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onSt
 const getTaskView = (task, setCategoryFilter, onSeasonClick, onStageClick) => task ?
     <div className={'grid col-span-12'}>
         <TaskView
+            // Comes from task: id, slug, name, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
             key={task.id}
-            id={task.id}
-            slug={task.slug}
-            title={task.name}
+            task={task}
             onSeasonClick={() => onSeasonClick(task.season.id)}
             onStageClick={() => onStageClick(task.stage)}
-            startedAt={task.started_at}
-            endedAt={task.ended_at}
-            season={task.season}
-            stage={task.stage}
-            description={task.description ?? 'No Description'}
-            category={task.task_category.name ?? 'No Category'}
-            image={task.image}
             onCategoryClick={() => setCategoryFilter(task.task_category.name)}
-            onSe
         />
     </div> : null;
 /**

@@ -7,23 +7,29 @@ import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
 import {ClickableLink, formatDateTime} from "../../Cards";
 
-// TODO: Should probably refactor to take a Task object
+// Comes from task: id, slug, name, title, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
 export const TaskView = ({
-                             id,
-                             title,
-                             image,
-                             startedAt,
-                             endedAt,
-                             stage,
-                             season,
+                             task,
                              onStageClick,
                              onSeasonClick,
-                             description,
-                             category,
-                             slug,
                              onCategoryClick
                          }) => {
     const [leaderboard, setLeaderboard] = useState([]);
+
+    let {
+        id,
+        slug,
+        name,
+        started_at,
+        ended_at,
+        season,
+        stage,
+        description,
+        category,
+        image
+    } = task;
+    description = description ?? 'No Description';
+    category = category ?? 'No Category';
 
     useEffect(() => {
         fetch(`/api/tasks/${id}/leaderboard`)
@@ -32,13 +38,13 @@ export const TaskView = ({
     }, []);
 
     const clickableSeason = <ClickableLink name={season.name} onClick={onSeasonClick} color={'green'}/>
-    const clickableStage = stage ? <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} size={'text-lg'}/> : null;
+    const clickableStage = stage ?
+        <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} size={'text-lg'}/> : null;
 
     return <div className={'md:p-12'}>
-
-        <div className={'text-4xl font-semibold text-center'}>{title}</div>
+        <div className={'text-4xl font-semibold text-center'}>{name}</div>
         <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700 text-center justify-center'}>
-            {formatDateTime(startedAt)} - {formatDateTime(endedAt)}
+            {formatDateTime(started_at)} - {formatDateTime(ended_at)}
         </div>
         <div
             className={'text-purple-500 text-sm font-medium hover:underline mb-4 text-center cursor-pointer'}
