@@ -5,7 +5,8 @@ import {Rules} from "../../Rules";
 import {useEffect, useState} from "react";
 import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
-import {ClickableLink, formatDateTime} from "../../Cards";
+import {ClickableLink} from "../../Cards";
+import {formatDateTime} from "../../../utilities";
 
 // Comes from task: id, slug, name, title, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
 export const TaskView = ({

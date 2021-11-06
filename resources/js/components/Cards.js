@@ -1,13 +1,5 @@
-// TODO: Should probably refactor to take a Task object
 import moment from 'moment';
-import {goTo} from "../utilities";
-
-export const formatDateTime = dateTime => {
-    if (!dateTime) {
-        return <span className={'text-gray-500'}>None</span>
-    }
-    return moment(dateTime).format('MMM Do YY');
-};
+import {formatDateTime} from "../utilities";
 
 /**
  * A generic Card component. This has some slots for putting whatever you want in, and can show

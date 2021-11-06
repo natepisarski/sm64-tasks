@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * If you give this the react router 'history' object from useHistory(), it returns a function that can take a URL.
  * The function that gets returned can then be used in an onClick() handler.
@@ -45,3 +47,11 @@ export const calculateTaskScore = (tasks, getScoreFromTask = task => task.pivot.
 
 /** Do absolutely nothing; makes a good Placeholder function. */
 export const unit = () => {};
+
+/** The date formatting used for tasks. */
+export const formatDateTime = dateTime => {
+    if (!dateTime) {
+        return <span className={'text-gray-500'}>None</span>
+    }
+    return moment(dateTime).format('MMM Do YY');
+};
