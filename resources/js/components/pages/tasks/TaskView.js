@@ -25,11 +25,11 @@ export const TaskView = ({
         season,
         stage,
         description,
-        category,
+        task_category,
         image
     } = task;
     description = description ?? 'No Description';
-    category = category ?? 'No Category';
+    const category = task_category?.name ?? 'No Category';
 
     useEffect(() => {
         fetch(`/api/tasks/${id}/leaderboard`)
