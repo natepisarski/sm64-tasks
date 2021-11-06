@@ -58,10 +58,8 @@ export const TaskIndex = ({}) => {
         if (reset) {
             onTaskClick(null);
         }
-        
-        console.debug('About to filter based on ', filterableObject);
+
         history.push(queryStringGenerator(filterableObject));
-        console.debug('Should have made the URL: ', queryStringGenerator(filterableObject));
 
         filterSetter(filterableObject);
     }
@@ -124,18 +122,11 @@ const getTaskCards = (tasks, setCategoryFilter, onTaskClick, onSeasonClick, onSt
     key={task.id}
     className={'grid col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2'}>
     <TaskCard
-        category={task.task_category?.name ?? 'No Category'}
-        title={task.name}
-        description={task.description ?? 'No Description'}
-        image={task.image}
-        stage={task.stage}
+        task={task}
         onStageClick={() => onStageClick(task.stage)}
         onTaskClick={() => onTaskClick(task)}
         onCategoryClick={() => setCategoryFilter(task.task_category?.name)}
-        seasonName={task.season?.name}
         onSeasonClick={() => onSeasonClick(task.season.id)}
-        startedAt={task.started_at}
-        endedAt={task.ended_at}
     />
 </div>);
 

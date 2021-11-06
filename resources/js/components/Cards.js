@@ -73,23 +73,30 @@ export const SeasonCard = ({id, title, tasks, onSeasonClick, color, border}) => 
  * sm64tasks, so it will likely grow in complexity even more as the site grows.
  */
 export const TaskCard = ({
-                             title,
-                             image,
-                             description,
-                             category,
-                             stage,
-                             startedAt,
-                             endedAt,
-                             seasonName,
+                             task,
                              onCategoryClick,
                              onTaskClick,
                              onSeasonClick,
                              onStageClick,
                          }) => {
+    let {
+        name,
+        image,
+        description,
+        task_category,
+        stage,
+        started_at,
+        ended_at,
+        season
+    } = task
+    let seasonName = season?.name;
+    let category = task_category?.name ?? 'No Category';
+    description = description ?? 'No Description';
+
     const renderedImage = <img width={256} height={256} className="h-48 w-full object-cover" src={image} alt=""/>;
 
     let isFuture = false;
-    if (startedAt && moment(startedAt).isAfter(moment())) {
+    if (started_at && moment(ended_at).isAfter(moment())) {
         isFuture = true;
     }
 
@@ -103,12 +110,12 @@ export const TaskCard = ({
 
     // If this task has already ended, we want to give it a slight gray look.
     let color = 'bg-white';
-    if (endedAt && moment(endedAt).isBefore(moment())) {
+    if (ended_at && moment(ended_at).isBefore(moment())) {
         color = 'bg-gray-200';
     }
 
     return <Card
-        title={title}
+        title={name}
         style={isFuture ? {filter: 'blur(10px)', userSelect: 'none'} : {}}
         hero={renderedImage}
         onClick={taskClickHandler}
@@ -122,7 +129,7 @@ export const TaskCard = ({
                     {clickableSeason}
                 </div>
                 <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700'}>
-                    {formatDateTime(startedAt)} - {formatDateTime(endedAt)}
+                    {formatDateTime(started_at)} - {formatDateTime(ended_at)}
                 </div>
             </div>
             <div className={'flex flex-row'}>
