@@ -31,7 +31,7 @@ export const TaskCard = ({
     const renderedImage = <img width={256} height={256} className="h-48 w-full object-cover" src={image} alt=""/>;
 
     let isFuture = false;
-    if (started_at && moment(started_at).isAfter(moment())) {
+    if (started_at && moment.utc(started_at).isAfter(moment())) {
         isFuture = true;
     }
 

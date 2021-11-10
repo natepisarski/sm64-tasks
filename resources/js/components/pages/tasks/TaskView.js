@@ -7,6 +7,7 @@ import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
 import {formatDateTime} from "../../../utilities";
 import {ClickableLink} from "../../pieces/ClickableLink";
+import moment from "moment";
 
 // Comes from task: id, slug, name, title, started_at, ended_at, season, stage, description (?? 'No Description), category (??NoCat), image,
 export const TaskView = ({
@@ -32,6 +33,9 @@ export const TaskView = ({
     description = description ?? 'No Description';
     const category = task_category?.name ?? 'No Category';
 
+    if (!started_at || moment.utc(started_at).isAfter(moment())) {
+        location.href = '/tasks';
+    }
     useEffect(() => {
         fetch(`/api/tasks/${id}/leaderboard`)
             .then(response => response.json())
