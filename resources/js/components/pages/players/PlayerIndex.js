@@ -1,84 +1,8 @@
 import {useHistory, useParams} from "react-router";
-import {calculateTaskScore, goTo} from "../../../utilities";
+import {goTo} from "../../../utilities";
 import {useEffect, useState} from "react";
-import {SeasonCard} from "../../Cards";
-import {SeasonView} from "../seasons/SeasonIndex";
-import {Leaderboard} from "../../Leaderboard";
-import {Link} from "react-router-dom";
-
-/**
- * This is the component that shows 1 single player, either in the grid or in the focused mode.
- */
-export const PlayerBubble = ({player, onClick}) => {
-    let bubbleClass = 'space-y-4 cursor-pointer rounded-lg ';
-
-    if (onClick) {
-        bubbleClass += 'hover:shadow-lg hover:bg-blue-100';
-    }
-
-    const taskLength = player.tasks.length;
-    const nameSubtitle = taskLength + (taskLength === 1 ? ' task' : ' tasks');
-
-    return <li key={player.id}>
-        <div className={bubbleClass} onClick={onClick}>
-            <img className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
-                 src={player.avatar}
-                 alt={player.name}/>
-            <div className="space-y-2">
-                <div className="text-xs font-medium lg:text-sm">
-                    <h3>{player.name}</h3>
-                    <span className={'text-sm text-gray-600'}>{nameSubtitle}</span>
-                </div>
-            </div>
-        </div>
-    </li>;
-}
-
-/**
- * The PlayerGrid is a component that shows the players in a series
- * @constructor
- */
-export const PlayerGrid = ({players, onPlayerClick}) => {
-    return <ul role="list"
-               className="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6">
-        {players.map(player => <PlayerBubble key={player.id} player={player} onClick={onPlayerClick(player)}/>)}
-    </ul>
-};
-
-/**
- * The view for looking at 1 specific player. This will be their name, avatar, TaskScore, and Task Leaderboard
- * @param player
- * @returns {JSX.Element}
- * @constructor
- */
-export const PlayerView = ({player}) => {
-    // 'player' comes with a structure called 'tasks', which has this form:
-    /*
-        "tasks": [
-          {id: x, name: "SSL: All Boxes",  pivot: {"score": 4}}
-        ]
-
-        We can use this to make a Leaderboard, with Tasks on the left and Score on the right.
-     */
-    return <div className={'list-none mb-6'}>
-        <PlayerBubble player={player}/>
-        <div className={'flex flex-row w-full justify-center my-5'}>
-            <div className={'flex flex-col w-full'}>
-                <div className={'flex flex-row justify-center font-semibold'}>
-                    TaskScore: <span className={'font-bold text-blue-500 ml-2'}>{calculateTaskScore(player.tasks)}</span>
-                </div>
-                <Leaderboard
-                    leaderboardData={player.tasks}
-                    leftColumnAccessor={task => task}
-                    leftColumnName={'Task'}
-                    leftColumnFormatter={task => <Link className={'text-purple-500 hover:underline'}
-                                                       to={`/tasks/${task.id}`}>{task.name}</Link>}
-                    scoreAccessor={task => task.pivot.score}
-                />
-            </div>
-        </div>
-    </div>
-};
+import {PlayerView} from "./PlayerView";
+import {PlayerGrid} from "./PlayerGrid";
 
 /**
  * Shows a grid of Players at first. These appear as bubbles with the Players' name and Discord avatar.
