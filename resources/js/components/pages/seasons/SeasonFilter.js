@@ -1,10 +1,16 @@
 /** Component that allows the user to filter between seasons, in multiple contexts. */
-export const SeasonFilter = ({seasons, onSeasonClick}) => {
+import {Badge, Filters} from "../tasks/Filters";
+
+/** Displays a series of badges that represent filters. */
+export const SeasonFilter = ({seasons, onSeasonClick, selectedSeasonId = null}) => {
     return <div>
         {seasons.map(season => {
-            return <div key={season.id} onClick={() => onSeasonClick(season)}>
+            const isSelectedSeason = selectedSeasonId && season.id === selectedSeasonId;
+            const bg = isSelectedSeason && 'bg-blue-500';
+
+            return <Badge key={season.id} className={'cursor-pointer'} onClick={() => onSeasonClick(season)} bg={bg} >
                 {season.name}
-            </div>
+            </Badge>
         })}
     </div>
 };

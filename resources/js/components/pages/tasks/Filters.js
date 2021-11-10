@@ -11,7 +11,7 @@ export const Filters = ({tuples}) => {
     for (const [name, value, onRemove] of tuples) {
         if (!!value) {
             filters.push(
-                <RemovableBadge key={name} name={name} onRemove={onRemove} />
+                <RemovableBadge key={name} name={name} onRemove={onRemove}/>
             );
         }
     }
@@ -34,19 +34,27 @@ export const Filters = ({tuples}) => {
     </div>
 };
 
+/** A simple black and white badge/pill that can contain anything. */
+export const Badge = ({children, onClick, className = '', bg = 'bg-white'}) => {
+    return <span
+        onClick={onClick}
+        className={`m-1 inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium ${bg} text-gray-900 ${className}`}>
+        {children}
+    </span>
+};
+
 /** Displays 1 badge, which is 1 currently filtered item. */
 export const RemovableBadge = ({name, onRemove}) => {
-    return <span
-        className="m-1 inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-white text-gray-900">
-              <span>{name}</span>
-              <button type="button"
-                      className="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-                      onClick={onRemove}
-              >
-                <span className="sr-only">Remove filter for {name}</span>
-                <svg className="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                  <path strokeLinecap="round" strokeWidth="1.5" d="M1 1l6 6m0-6L1 7"/>
-                </svg>
-              </button>
-            </span>
+    return <Badge>
+        <span>{name}</span>
+        <button type="button"
+                className="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                onClick={onRemove}
+        >
+            <span className="sr-only">Remove filter for {name}</span>
+            <svg className="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                <path strokeLinecap="round" strokeWidth="1.5" d="M1 1l6 6m0-6L1 7"/>
+            </svg>
+        </button>
+    </Badge>
 }

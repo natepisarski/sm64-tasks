@@ -39,7 +39,7 @@ export const PlayerView = ({player}) => {
     console.debug('VIEWING THIS PLAYER: ', player);
     return <div className={'list-none mb-6'}>
         <PlayerBubble player={player} />
-        <SeasonFilter seasons={uniqueSeasons} onSeasonClick={season => setSeasonFilter(season.id)} />
+        <SeasonFilter seasons={uniqueSeasons} onSeasonClick={season => setSeasonFilter(season.id)} selectedSeasonId={seasonFilter} />
         <div className={'flex flex-row w-full justify-center my-5'}>
             <div className={'flex flex-col w-full'}>
                 <div className={'flex flex-row justify-center font-semibold'}>
