@@ -33,9 +33,12 @@ export const TaskView = ({
     description = description ?? 'No Description';
     const category = task_category?.name ?? 'No Category';
 
+    let blurStyle = '';
     if (!started_at || moment.utc(started_at).isAfter(moment())) {
         location.href = '/tasks';
+        blurStyle = {filter: 'blur(15px)'};
     }
+
     useEffect(() => {
         fetch(`/api/tasks/${id}/leaderboard`)
             .then(response => response.json())
@@ -46,7 +49,7 @@ export const TaskView = ({
     const clickableStage = stage ?
         <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} size={'text-lg'}/> : null;
 
-    return <div className={'md:p-12'}>
+    return <div className={`md:p-12`} style={blurStyle}>
         <div className={'text-4xl font-semibold text-center'}>{name}</div>
         <div className={'flex flex-1 text-sm whitespace-nowrap font-light text-gray-700 text-center justify-center'}>
             {formatDateTime(started_at)} - {formatDateTime(ended_at)}
