@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useHistory, useLocation, useParams} from "react-router";
-import {TaskCard} from "../../Cards";
 import {TaskView} from "./TaskView";
 import * as queryString from 'query-string';
 import {Filters} from "./Filters";
 import {unit} from "../../../utilities";
+import {TaskCard} from "./TaskCard";
 
 /**
  * This page shows a list of all the active tasks. When you select a task, it will show you an overlay of that task.

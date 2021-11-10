@@ -1,12 +1,12 @@
 /** Extremely similar to TaskIndex, except it's for the seasons. You will see a list of all the seasons, and when you
  * click on it, it will taske you to the Tasks view, filtered to that season. */
 import {useEffect, useState} from "react";
-import {SeasonCard} from "../../Cards";
 import {useHistory, useParams} from "react-router";
 import {getRandomItemFromArray, goTo} from "../../../utilities";
 import {Leaderboard} from "../../Leaderboard";
 import moment from "moment";
 import {Link} from "react-router-dom";
+import {SeasonCard} from "./SeasonCard";
 
 /**
  * Root view for the seasons. This will display a list of all the seasons, and potentially a leaderboard for a season
