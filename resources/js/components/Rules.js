@@ -4,6 +4,7 @@ import {SlSlopeMasterRules} from "./rules/SlSlopeMasterRules";
 import {TtmCalculusRules} from "./rules/TtmCalculusRules";
 import {SslAllBoxesRules} from "./rules/SslAllBoxesRules";
 import {Ttc100MovingRules} from "./rules/Ttc100MovingRules";
+import {CcmIceClimberRules} from "./rules/CcmIceClimberRules";
 
 /**
  * The root Rules component. Depending on the slug, this can show any arbitrary rules for your task.
@@ -18,6 +19,7 @@ export const Rules = ({slug}) => {
         ['ttm-calculus', <TtmCalculusRules />],
         ['ssl-all-boxes', <SslAllBoxesRules />],
         ['ttc-break-all-boxes', <Ttc100MovingRules />],
+        ['ccm-ice-climber', <CcmIceClimberRules />],
     ];
 
     for (const rule of ruleSet) {

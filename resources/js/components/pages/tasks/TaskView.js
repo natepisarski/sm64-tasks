@@ -33,10 +33,10 @@ export const TaskView = ({
     description = description ?? 'No Description';
     const category = task_category?.name ?? 'No Category';
 
-    let blurStyle = '';
+    let blurStyle = {};
     if (!started_at || moment.utc(started_at).isAfter(moment())) {
-        location.href = '/tasks';
-        blurStyle = {filter: 'blur(15px)'};
+        // location.href = '/tasks'; TODO PLEASE TURN BACK ON
+        // blurStyle = {filter: 'blur(15px)'};
     }
 
     useEffect(() => {
