@@ -5,6 +5,8 @@ import {SiteHeader} from "./pages/website/SiteHeader";
 import {Redirect} from "react-router";
 import {SeasonIndex} from "./pages/seasons/SeasonIndex";
 import {PlayerIndex} from "./pages/players/PlayerIndex";
+import {TaskResults} from "./pages/admin/creator/TaskResults";
+import {TaskCreator} from "./pages/admin/creator/TaskCreator";
 
 /**
  * This is the EntryPoint for the React app. From here we just set up the router. The individual pages each control
@@ -23,11 +25,16 @@ export const Tasks = ({}) => {
                     render={() => <Redirect to={'/tasks'} />}
                 />
                 <Route path={'/tasks/:taskId'} children={<TaskIndex/>}/>
+                <Route path={'/tasks/:taskId/results'} children={<TaskResults />} />
                 <Route path={'/tasks'} children={<TaskIndex/>}/>
+
                 <Route path={'/seasons/:seasonId'} children={<SeasonIndex/>} />
                 <Route path={'/seasons'} children={<SeasonIndex/>} />
+
                 <Route path={'/players/:playerId'} children={<PlayerIndex />} />
                 <Route path={'/players'} children={<PlayerIndex />} />
+
+                <Route path={'/creator'} children={<TaskCreator />} />
             </Switch>
         </div>
     </BrowserRouter>

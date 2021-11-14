@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('api')->group(function () {
+    Route::prefix('creator-bundle')->group(function () {
+        Route::get('', [\App\Http\Controllers\CreatorBundleController::class, 'index'])->name('create.bundle');
+    });
+
     Route::prefix('tasks')->group(function () {
         Route::get('', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
 
