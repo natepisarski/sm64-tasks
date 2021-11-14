@@ -6,7 +6,8 @@ export const CcmIceClimberRules = () => {
         <p>
             For this task, you will start at <b>05 01 20</b> in CCM. This is leaving the teleporter, coming out on the bottom of the mountain <br />
             near the penguin. From here, your task is to get the red coin that's near the gigantic ice spike.<br/><br/>
-            That red coin is shown in the Task Picture.
+            That red coin is shown in the Task Picture.<br/>
+            Your only real restriction is that <b>you can't use the teleporter.</b>
         </p>
         <br /><br/>
         <p>
