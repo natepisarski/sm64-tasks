@@ -27,6 +27,7 @@ export const TaskView = ({
         season,
         stage,
         description,
+        video_url,
         task_category,
         image
     } = task;
@@ -48,6 +49,12 @@ export const TaskView = ({
     const clickableSeason = <ClickableLink name={season.name} onClick={onSeasonClick} color={'green'}/>
     const clickableStage = stage ?
         <ClickableLink name={stage.name} onClick={onStageClick} color={'red'} size={'text-lg'}/> : null;
+    const embeddedVideo = video_url ?
+        <iframe width="560" height="315" src={video_url}
+                title="YouTube video player" frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen />
+        : null;
 
     return <div className={`md:p-12`} style={blurStyle}>
         <div className={'text-4xl font-semibold text-center'}>{name}</div>
@@ -79,6 +86,9 @@ export const TaskView = ({
         </div>
         <div className={'flex flex-row w-full justify-center mb-5'}>
             <img src={image}/>
+        </div>
+        <div className={'flex flex-row w-full justify-center mb-5'}>
+            {embeddedVideo}
         </div>
         <div className={'text-2xl font-semibold text-4xl'}>Rules</div>
         <Rules slug={slug}/>

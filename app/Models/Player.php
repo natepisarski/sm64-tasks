@@ -16,6 +16,6 @@ class Player extends Model
 {
     public function tasks()
     {
-        return $this->belongsToMany(Task::class)->withPivot(['score']);
+        return $this->belongsToMany(Task::class)->withPivot(['score', 'video_url']);
     }
 }

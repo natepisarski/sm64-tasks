@@ -2,8 +2,9 @@ import {calculateTaskScore} from "../../../utilities";
 import {Leaderboard} from "../../Leaderboard";
 import {Link} from "react-router-dom";
 import {PlayerBubble} from "./PlayerBubble";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SeasonFilter} from "../seasons/SeasonFilter";
+import {ClickableLink} from "../../pieces/ClickableLink";
 
 /**
  * The view for looking at 1 specific player. This will be their name, avatar, TaskScore, and Task Leaderboard
@@ -33,6 +34,9 @@ export const PlayerView = ({player}) => {
      */
     const [seasonFilter, setSeasonFilter] = useState(null);
 
+    useEffect(() => {
+        setSeasonFilter(null);
+    }, [player]);
     const filteredTasks = getFilteredTasks(seasonFilter, player.tasks);
     const uniqueSeasons = getUniqueSeasons(player.tasks);
 
@@ -52,6 +56,7 @@ export const PlayerView = ({player}) => {
                     leftColumnFormatter={task => <Link className={'text-purple-500 hover:underline'}
                                                        to={`/tasks/${task.id}`}>{task.name}</Link>}
                     scoreAccessor={task => task.pivot.score}
+                    rightColumnFormatter={(score, task) => <ClickableLink onClick={task.pivot.video_url ? () => location.href = task.pivot.video_url : null} color={'indigo'} name={score} size={'text-normal'} /> }
                 />
             </div>
         </div>

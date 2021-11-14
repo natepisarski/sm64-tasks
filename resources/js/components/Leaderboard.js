@@ -24,6 +24,7 @@ export const Leaderboard = ({
                                 leftColumnName = 'Player',
                                 leftColumnFormatter = dataFormatter,
                                 leftColumnAccessor = dataAccessor,
+                                rightColumnFormatter = x => x,
                                 scoreAccessor = rightColumnAccessor,
                             }) => {
     if (leaderboardData.length === 0) {
@@ -42,7 +43,7 @@ export const Leaderboard = ({
         </thead>
         <tbody>
         {leaderboardData.sort((first, second) => scoreAccessor(first) > scoreAccessor(second)).map(data => {
-            return getLeaderboardRow(leftColumnAccessor(data), scoreAccessor(data), leftColumnFormatter);
+            return getLeaderboardRow(leftColumnAccessor(data), scoreAccessor(data), leftColumnFormatter, rightColumnFormatter);
         })}
         </tbody>
     </table>
@@ -56,16 +57,17 @@ export const Leaderboard = ({
  * @param data A piece of data. This can be anything. This gets passed wholesale to leftColumnFormatter.
  * @param score The score for this row.
  * @param leftColumnFormatter This function accepts 'data', and returns anything as a result. Can be used for embedding elements or changing presentation.
+ * @param rightColumnFormatter Thiis function takes the valuer of the right column, and returns it. It will also take the RAW data value. of the first column.
  * @returns {JSX.Element}
  */
-const getLeaderboardRow = (data, score, leftColumnFormatter) => {
+const getLeaderboardRow = (data, score, leftColumnFormatter, rightColumnFormatter) => {
     // TODO: Styling, discord link
     return <tr key={data.id} className={'border-b-2 border-gray-200'}>
         <td className={'text-center p-3'}>
             {leftColumnFormatter(data)}
         </td>
         <td className={'text-center p-3'}>
-            {score}
+            {rightColumnFormatter(score, data)}
         </td>
     </tr>
 }
