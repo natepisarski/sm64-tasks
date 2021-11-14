@@ -82,6 +82,8 @@ export const TaskView = ({
                 leaderboardData={leaderboard}
                 leftColumnFormatter={player => <Link className={'text-purple-500 hover:underline'}
                                                      to={`/players/${player.id}`}>{player.name}</Link>}
+                rightColumnFormatter={(score, player) => <ClickableLink onClick={player.pivot.video_url ? () => location.href = player.pivot.video_url : null} color={'indigo'} name={score} size={'text-normal'} /> }
+
             />
         </div>
         <div className={'flex flex-row w-full justify-center mb-5'}>
