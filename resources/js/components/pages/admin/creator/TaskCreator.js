@@ -5,9 +5,14 @@
  * @constructor
  */
 import {useEffect, useState} from "react";
+import {TaskEdit} from "./TaskEdit";
+import {getTaskObjectFromTaskId} from "./creatorBundleUtilities";
 
 export const TaskCreator = ({}) => {
     const [creatorBundle, setCreatorBundle] = useState({});
+    const [taskId, setTaskId] = useState({});
+
+    const taskObject = getTaskObjectFromTaskId(creatorBundle, taskId);
 
     useEffect(() => {
         fetch('/api/creator-bundle')
@@ -25,6 +30,6 @@ export const TaskCreator = ({}) => {
             etc. all hooked up. Then you can edit the more minor details (image URL) by hand.
         </p>
         <br/>
-
+        <TaskEdit creatorBundle={creatorBundle} task={taskObject} />
     </div>
 };
