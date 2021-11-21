@@ -39,11 +39,13 @@ export const TaskCreator = ({}) => {
             seasonName: taskObject?.season?.name,
             startedAt: taskObject?.started_at,
             endedAt: taskObject?.ended_at,
-            categorySlug: taskObject?.category?.slug,
+            categoryName: taskObject?.task_category?.name,
+            videoUrl: taskObject?.video_url,
         };
     };
     const [taskData, setTaskData] = useState(getTaskData(taskObject));
 
+    console.debug('Task Object: ', taskObject);
     useEffect(() => {
         setTaskData(getTaskData(taskObject));
     }, [taskObject]);

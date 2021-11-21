@@ -58,8 +58,12 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
             </Dropdown>
         </div>
         <div className={'flex flex-row'}>
-            <Form.Label>Task Description</Form.Label>
+            <Form.Label>Image URL</Form.Label>
             <Form.Control value={taskData.image ?? ''} onChange={setData('image')}/>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Video URL</Form.Label>
+            <Form.Control value={taskData.videoUrl ?? ''} onChange={setData('videoUrl')}/>
         </div>
         <div className={'flex flex-row'}>
             <Form.Label>Season</Form.Label>
@@ -72,6 +76,22 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
                     {creatorBundle?.seasons?.map(season => {
                         return <Dropdown.Item key={season.id} onClick={() => setData('seasonName')(season?.name, false)} defaultValue={season?.name}>
                             {season?.name}
+                        </Dropdown.Item>
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Category</Form.Label>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="stage-dropdown">
+                    {taskData?.categoryName ?? 'Category'}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {creatorBundle?.categories?.map(category => {
+                        return <Dropdown.Item key={category.id} onClick={() => setData('categoryName')(category?.slug, false)} defaultValue={category?.name}>
+                            {category?.name}
                         </Dropdown.Item>
                     })}
                 </Dropdown.Menu>
