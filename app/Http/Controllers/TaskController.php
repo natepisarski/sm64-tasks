@@ -3,10 +3,23 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Concerns\TaskCRUD;
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function store(Request $request, TaskCRUD $taskCRUD)
+    {
+        dd('Got into the taskCRUD');
+    }
+
+    public function update(Task $task, TaskCRUD $taskCRUD, Request $request)
+    {
+        return 'yo';
+        dd('Got into the update');
+    }
+
     public function index()
     {
         // TODO: Start returning this with a resource.

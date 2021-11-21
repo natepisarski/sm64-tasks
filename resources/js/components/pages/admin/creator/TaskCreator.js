@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {TaskEdit} from "./TaskEdit";
 import {getTaskObjectFromTaskId} from "./creatorBundleUtilities";
 import moment from "moment-timezone";
+import {Button} from "react-bootstrap";
 
 export const TaskCreator = ({}) => {
     const [creatorBundle, setCreatorBundle] = useState({});
@@ -30,6 +31,7 @@ export const TaskCreator = ({}) => {
         );
 
     const taskObject = getTaskObjectFromTaskId(creatorBundle, taskId);
+
     const getTaskData = taskObject => {
         return {
             name: taskObject?.name,
@@ -44,7 +46,30 @@ export const TaskCreator = ({}) => {
             videoUrl: taskObject?.video_url,
         };
     };
+
     const [taskData, setTaskData] = useState(getTaskData(taskObject));
+
+    const submit = () => {
+        if (taskObject) {
+            fetch(`/api/tasks/${taskObject.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData),
+            })
+                .then(() => location.reload());
+        } else {
+            fetch(`/api/tasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData),
+            })
+                .then(() => location.reload());
+        }
+    };
 
     console.debug('Task Object: ', taskObject);
     useEffect(() => {
@@ -65,5 +90,6 @@ export const TaskCreator = ({}) => {
             {taskSelectors}
         </div>
         <TaskEdit creatorBundle={creatorBundle} taskData={taskData} setTaskData={setTaskData}/>
+        <Button onClick={submit}>Submit</Button>
     </div>
 };

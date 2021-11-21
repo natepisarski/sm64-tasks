@@ -106,5 +106,9 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
             <Form.Label>End Date (America/New_York time)</Form.Label>
             <Form.Control value={taskData.endedAt ?? ''} onChange={setData('endedAt')}/>
         </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>API Key</Form.Label>
+            <Form.Control value={''} onChange={setData('apiKey')}/>
+        </div>
     </div>
 }

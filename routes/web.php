@@ -21,8 +21,10 @@ Route::prefix('api')->group(function () {
     Route::prefix('tasks')->group(function () {
         Route::get('', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
 
+        Route::post('', [\App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
         Route::prefix('{task}')->group(function () {
             Route::get('leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderboardForTask'])->name('tasks.leaderboards.index');
+            Route::put('', [\App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update');
         });
     });
     Route::prefix('seasons')->group(function () {
