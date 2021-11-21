@@ -1,4 +1,5 @@
 import {Form, Button, Dropdown} from 'react-bootstrap';
+import DateTimePicker from 'react-datetime-picker';
 
 /**
  * Component for editing or creating a single Task.
@@ -96,6 +97,14 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
                     })}
                 </Dropdown.Menu>
             </Dropdown>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Start Date (America/New_York time)</Form.Label>
+            <Form.Control value={taskData.startedAt ?? ''} onChange={setData('startedAt')}/>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>End Date (America/New_York time)</Form.Label>
+            <Form.Control value={taskData.endedAt ?? ''} onChange={setData('endedAt')}/>
         </div>
     </div>
 }

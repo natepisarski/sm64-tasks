@@ -7,6 +7,7 @@
 import {useEffect, useState} from "react";
 import {TaskEdit} from "./TaskEdit";
 import {getTaskObjectFromTaskId} from "./creatorBundleUtilities";
+import moment from "moment-timezone";
 
 export const TaskCreator = ({}) => {
     const [creatorBundle, setCreatorBundle] = useState({});
@@ -37,8 +38,8 @@ export const TaskCreator = ({}) => {
             stageSlug: taskObject?.stage?.slug,
             image: taskObject?.image,
             seasonName: taskObject?.season?.name,
-            startedAt: taskObject?.started_at,
-            endedAt: taskObject?.ended_at,
+            startedAt: moment.utc(taskObject?.started_at).tz('America/New_York').format('YYYY-MM-DD HH:MM:SS'),
+            endedAt: moment.utc(taskObject?.ended_at).tz('America/New_York').format('YYYY-MM-DD HH:MM:SS'),
             categoryName: taskObject?.task_category?.name,
             videoUrl: taskObject?.video_url,
         };
