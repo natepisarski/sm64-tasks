@@ -12,8 +12,6 @@ export const TaskCreator = ({}) => {
     const [creatorBundle, setCreatorBundle] = useState({});
     const [taskId, setTaskId] = useState({});
 
-    const taskObject = getTaskObjectFromTaskId(creatorBundle, taskId);
-
     useEffect(() => {
         fetch('/api/creator-bundle')
             .then(r => r.json())
@@ -21,15 +19,48 @@ export const TaskCreator = ({}) => {
     }, []);
 
     console.debug('Creator Bundle: ', creatorBundle);
+
+    const taskSelectors = !creatorBundle?.tasks ? null :
+        creatorBundle.tasks.map(task =>
+            <div key={task.name} className={'text-indigo-500 hover:underline font-semibold flex flex-row cursor-pointer'}
+                 onClick={() => setTaskId(task.id)}>
+                {task.slug}
+            </div>
+        );
+
+    const taskObject = getTaskObjectFromTaskId(creatorBundle, taskId);
+    const getTaskData = taskObject => {
+        return {
+            name: taskObject?.name,
+            slug: taskObject?.slug,
+            descriptions: taskObject?.description,
+            stageId: taskObject?.stage_id,
+            image: taskObject?.image,
+            seasonId: taskObject?.season_id,
+            startedAt: taskObject?.started_at,
+            endedAt: taskObject?.ended_at,
+            categoryId: taskObject?.category_id,
+        };
+    };
+    const [taskData, setTaskData] = useState(getTaskData(taskObject));
+
+    useEffect(() => {
+        setTaskData(getTaskData(taskObject));
+    }, [taskObject]);
+
     return <div>
         <p className={'text-gray-700'}>
-            The Task Creator is an administrative tool that makes creating and editing tasks easier. If you fill in the form
+            The Task Creator is an administrative tool that makes creating and editing tasks easier. If you fill in the
+            form
             below,<br/>
             you will create a Task into the 'tasks' table of the database. This will have all of its timestamps,
             relationships,
             etc. all hooked up. Then you can edit the more minor details (image URL) by hand.
         </p>
         <br/>
-        <TaskEdit creatorBundle={creatorBundle} task={taskObject} />
+        <div className={'flex flex-col border-solid border-2 mb-6'}>
+            {taskSelectors}
+        </div>
+        <TaskEdit creatorBundle={creatorBundle} taskData={taskData} setTaskData={setTaskData}/>
     </div>
 };
