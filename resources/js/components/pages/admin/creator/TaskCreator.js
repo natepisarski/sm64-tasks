@@ -36,7 +36,7 @@ export const TaskCreator = ({}) => {
             description: taskObject?.description,
             stageSlug: taskObject?.stage?.slug,
             image: taskObject?.image,
-            seasonSlug: taskObject?.season?.slug,
+            seasonName: taskObject?.season?.name,
             startedAt: taskObject?.started_at,
             endedAt: taskObject?.ended_at,
             categorySlug: taskObject?.category?.slug,

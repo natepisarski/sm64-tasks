@@ -57,5 +57,25 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
                 </Dropdown.Menu>
             </Dropdown>
         </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Task Description</Form.Label>
+            <Form.Control value={taskData.image ?? ''} onChange={setData('image')}/>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Season</Form.Label>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="stage-dropdown">
+                    {taskData?.seasonName ?? 'Season'}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {creatorBundle?.seasons?.map(season => {
+                        return <Dropdown.Item key={season.id} onClick={() => setData('seasonName')(season?.name, false)} defaultValue={season?.name}>
+                            {season?.name}
+                        </Dropdown.Item>
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
     </div>
 }
