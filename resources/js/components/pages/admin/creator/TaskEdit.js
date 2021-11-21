@@ -91,7 +91,7 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
 
                 <Dropdown.Menu>
                     {creatorBundle?.categories?.map(category => {
-                        return <Dropdown.Item key={category.id} onClick={() => setData('categoryName')(category?.slug, false)} defaultValue={category?.name}>
+                        return <Dropdown.Item key={category.id} onClick={() => setData('categoryName')(category?.name, false)} defaultValue={category?.name}>
                             {category?.name}
                         </Dropdown.Item>
                     })}

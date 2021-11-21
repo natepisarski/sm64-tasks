@@ -34,7 +34,7 @@ class TaskCRUD
         $stageWithSlug = Stage::where('slug', $taskData['stageSlug'])->first();
 
         $task->name = $taskData['name'];
-        $task->category_id = $categoryWithName->id;
+        $task->task_category_id = $categoryWithName->id;
         $task->description = $taskData['description'];
         $task->started_at = (new Carbon($taskData['startedAt'], 'America/New_York'))->utc();
         $task->ended_at = (new Carbon($taskData['endedAt'], 'America/New_York'))->utc();

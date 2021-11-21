@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function store(Request $request, TaskCRUD $taskCRUD)
     {
-        dd('Got into the taskCRUD');
+        $taskCRUD->updateOrCreate(null, $request->all());
     }
 
     public function update(Task $task, TaskCRUD $taskCRUD, Request $request)
