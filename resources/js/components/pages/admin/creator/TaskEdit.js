@@ -1,4 +1,4 @@
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Dropdown} from 'react-bootstrap';
 
 /**
  * Component for editing or creating a single Task.
@@ -15,9 +15,13 @@ import {Form, Button} from 'react-bootstrap';
  */
 export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) => {
 
-    const setData = dataName => value => {
+    const setData = dataName => (value, isSyntheticEvent = true) => {
         console.debug('New Value: ', value);
-        setTaskData({...taskData, ...{[dataName]: value.target.value}});
+        if (isSyntheticEvent) {
+            setTaskData({...taskData, ...{[dataName]: value.target.value}});
+        } else {
+            setTaskData({...taskData, ...{[dataName]: value}});
+        }
     };
 
     console.debug('Editing: ', task);
@@ -30,10 +34,28 @@ export const TaskEdit = ({creatorBundle, task = null, taskData, setTaskData}) =>
             <Form.Control value={taskData.name ?? ''} onChange={setData('name')}/>
         </div>
         <div className={'flex flex-row'}>
-            {/*<TextBox label={'Slug'} initialValue={task?.slug}/>*/}
+            <Form.Label>Task Slug</Form.Label>
+            <Form.Control value={taskData.slug ?? ''} onChange={setData('slug')}/>
         </div>
         <div className={'flex flex-row'}>
-            {/*<TextBox label={'Description'} initialValue={task?.description}/>*/}
+            <Form.Label>Task Description</Form.Label>
+            <Form.Control value={taskData.description ?? ''} onChange={setData('description')}/>
+        </div>
+        <div className={'flex flex-row'}>
+            <Form.Label>Stage</Form.Label>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="stage-dropdown">
+                    {taskData?.stageSlug ?? 'Stage'}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {creatorBundle?.stages?.map(stage => {
+                        return <Dropdown.Item key={stage.id} onClick={() => setData('stageSlug')(stage.slug, false)} defaultValue={stage.slug}>
+                            {stage.name}
+                        </Dropdown.Item>
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
         </div>
     </div>
 }

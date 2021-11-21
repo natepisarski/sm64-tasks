@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {TaskIndex} from "./pages/tasks/TaskIndex";
 import {SiteHeader} from "./pages/website/SiteHeader";

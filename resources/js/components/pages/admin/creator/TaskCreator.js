@@ -33,13 +33,13 @@ export const TaskCreator = ({}) => {
         return {
             name: taskObject?.name,
             slug: taskObject?.slug,
-            descriptions: taskObject?.description,
-            stageId: taskObject?.stage_id,
+            description: taskObject?.description,
+            stageSlug: taskObject?.stage?.slug,
             image: taskObject?.image,
-            seasonId: taskObject?.season_id,
+            seasonSlug: taskObject?.season?.slug,
             startedAt: taskObject?.started_at,
             endedAt: taskObject?.ended_at,
-            categoryId: taskObject?.category_id,
+            categorySlug: taskObject?.category?.slug,
         };
     };
     const [taskData, setTaskData] = useState(getTaskData(taskObject));
