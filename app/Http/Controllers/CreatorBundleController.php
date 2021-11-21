@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Player;
 use App\Models\Season;
 use App\Models\Stage;
+use App\Models\Task;
 use App\Models\TaskCategory;
 
 class CreatorBundleController extends Controller
@@ -17,6 +19,8 @@ class CreatorBundleController extends Controller
             'stages' => Stage::all(),
             'seasons' => Season::all(),
             'categories' => TaskCategory::all(),
+            'tasks' => Task::all(),
+            'players' => Player::all(),
         ];
     }
 }
