@@ -16,8 +16,7 @@ class TaskController extends Controller
 
     public function update(Task $task, TaskCRUD $taskCRUD, Request $request)
     {
-        return 'yo';
-        dd('Got into the update');
+        $taskCRUD->updateOrCreate($task, $request->all());
     }
 
     public function index()

@@ -23,7 +23,8 @@ class TaskCRUD
         'slug' => 'string',
         'stageSlug' => 'string',
         'videoUrl' => 'string',
-    ])] array $taskData) {
+    ])] array $taskData)
+    {
         if (is_null($task)) {
             $task = (new Task);
         }
@@ -34,15 +35,15 @@ class TaskCRUD
 
         $task->name = $taskData['name'];
         $task->category_id = $categoryWithName->id;
-        $taskData->description = $taskData['description'];
-        $taskData->started_at = (new Carbon($taskData['startedAt'], 'America/New_York'))->utc();
-        $taskData->ended_at = (new Carbon($taskData['endedAt'], 'America/New_York'))->utc();
-        $taskData->image = $taskData['image'];
-        $taskData->season_id = $seasonWithName->id;
-        $taskData->slug = $taskData['slug'];
-        $taskData->stage_id = $stageWithSlug->id;
-        $taskData->video_url = $taskData['videoUrl'];
+        $task->description = $taskData['description'];
+        $task->started_at = (new Carbon($taskData['startedAt'], 'America/New_York'))->utc();
+        $task->ended_at = (new Carbon($taskData['endedAt'], 'America/New_York'))->utc();
+        $task->image = $taskData['image'];
+        $task->season_id = $seasonWithName->id;
+        $task->slug = $taskData['slug'];
+        $task->stage_id = $stageWithSlug->id;
+        $task->video_url = $taskData['videoUrl'];
 
-        dd($taskData);
+        $task->save();
     }
 }
