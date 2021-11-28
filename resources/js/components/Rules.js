@@ -5,6 +5,7 @@ import {TtmCalculusRules} from "./rules/TtmCalculusRules";
 import {SslAllBoxesRules} from "./rules/SslAllBoxesRules";
 import {Ttc100MovingRules} from "./rules/Ttc100MovingRules";
 import {CcmIceClimberRules} from "./rules/CcmIceClimberRules";
+import {SMOCopycatRules} from "./rules/SMOCopycatRules";
 
 /**
  * The root Rules component. Depending on the slug, this can show any arbitrary rules for your task.
@@ -20,6 +21,7 @@ export const Rules = ({slug}) => {
         ['ssl-all-boxes', <SslAllBoxesRules />],
         ['ttc-break-all-boxes', <Ttc100MovingRules />],
         ['ccm-ice-climber', <CcmIceClimberRules />],
+        ['smo-copycat', <SMOCopycatRules />],
     ];
 
     for (const rule of ruleSet) {

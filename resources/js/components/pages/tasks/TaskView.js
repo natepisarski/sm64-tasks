@@ -35,10 +35,10 @@ export const TaskView = ({
     const category = task_category?.name ?? 'No Category';
 
     let blurStyle = {};
-    if (!started_at || moment.utc(started_at).isAfter(moment())) {
-        location.href = '/tasks';
-        blurStyle = {filter: 'blur(15px)'};
-    }
+    // if (!started_at || moment.utc(started_at).isAfter(moment())) {
+    //     location.href = '/tasks';
+    //     blurStyle = {filter: 'blur(15px)'};
+    // }
 
     useEffect(() => {
         fetch(`/api/tasks/${id}/leaderboard`)
