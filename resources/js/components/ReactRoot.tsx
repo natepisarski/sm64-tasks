@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Tasks} from "./Tasks";
 
-function ReactRoot() {
+function ReactRoot(): JSX.Element {
     return (
         <div className="w-full">
             <Tasks />
